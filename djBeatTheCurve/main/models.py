@@ -22,10 +22,7 @@ class Symptom(models.Model):
     )
     
     def __str__(self):
-        return f"""Symptom [
-            Name: {self.name}
-        ]
-        """
+        return self.name
 
 class Commorbidity(models.Model):
 
@@ -44,10 +41,7 @@ class Commorbidity(models.Model):
     )
     
     def __str__(self):
-        return f"""Commorbidity [
-            Name: {self.name}
-        ]
-        """
+        return self.name
 
 class CustomUser(models.Model):
 
