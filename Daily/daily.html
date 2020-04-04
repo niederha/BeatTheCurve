@@ -48,19 +48,20 @@
                     <h2>Logs</h2>
                 </div>
                 <form action="daily.html" method= "POST" formaction  = "URL" >
-                   
 
                     <div class="w3-container w3-row">
                         <p>
-                        <label for="trips" class=" w3-text-teal">
+                        <label for="option" class=" w3-text-teal">
                             <b>Trips to public places :</b>
                         </label>
+
+                        <select class="w3-select" name="option">
+                            <option value="" disabled selected>Choose number of trips</option>
                             <script language="Javascript">
-                            document.write( "<select name='Age'>");
                             for(k=0;k<=10;k++){
                             document.write("<option value='k'>"+k);}
-                            document.write("</select>");
                             </script>
+                        </select>
 
                            <!--  <button  type="submit" class="w3-btn w3-blue-grey" value="Login" >
                             <button id = sign_in class="w3-button w3-blue-grey" >Sign in</button> -->
@@ -70,25 +71,27 @@
 
                     <div class="w3-container">
                         <p>
+                        <label for="option" class=" w3-text-teal">
+                            <b>Did you wash your hands when comming back home:</b>
+                        </label>
                         <div class="w3-left">
-                        <input type="submit" class="w3-btn w3-blue-grey" value="Login" >
-                        No account yet ?
-                        <button id = sign_in class="w3-button w3-blue-grey" >Sign in</button>
+                            <button type="submit" class="w3-btn w3-blue-grey">Yes</button>
+                            <button id = sign_in class="w3-btn w3-blue-grey" >No</button>
                         </div>
                         </p>
-
-                        <div class="w3-container">
-                            <p>
-                            <label class="w3-text-teal">
-                                <i class="fas fa-comment-alt-edit"></i> <b>Comments</b>
-                            </label>
-                            <input type = "text" class="w3-input w3-border w3-light-grey" id="comments" >
-                            </p>
-                        </div>
-                    </div> 
+                    </div>
 
                     <div class="w3-container">
-                        <input type="submit" class="w3-btn w3-blue-grey" value="Login" >
+                        <p>
+                        <label class="w3-text-teal">
+                            <b>Comments</b>
+                        </label>
+                        <input type = "text" class="w3-input w3-border w3-light-grey" id="comments" >
+                        </p>
+                    </div>
+                    
+                    <div class="w3-container w3-center">
+                        <input type="submit" class="w3-btn w3-blue-grey" value="Submit">
                     </div>
 
                 </form>
