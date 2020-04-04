@@ -1,0 +1,84 @@
+<html>
+	<head>
+		<link rel="stylesheet" type="text/CSS" href="cssprojet.css">
+	</head>
+	
+	<body>
+		<meta charset="UTF-8">
+		
+		<br><br>
+		<center><IMG src="EdAC.png"></center><br><br>
+		<toto> 
+		<b>Présentation:</b><br><br>
+		
+			L’École d'Art Contemporain & de Photographie ou communément appelé EdAC est l'une des écoles d'art des plus réputées tant au niveau national, que mondial. 
+			Dirigée par Lucie Castella, Valérie Jaccottet et Ruth Noemi Bendel, l'école propose actuellement trois Bachelor dans les domaines de la Photographie,
+			les Arts Visuels et le Cinéma, ainsi que l'obtention du Master en Arts Visuels & Cinéma. <br><br>
+
+			L'enceinte de l'EdAC accueille chaque année 200 nouveaux élèves venus des quatre coins du globes. 
+			L'école doit sa renommée mondiale aux différents projets, expositions et collaborations qu'elle entretient avec des hautes écoles d'art, 
+			de photographie et de cinéma du monde entiers. Mais il n'y a pas que les écoles qui intéresse l'dPAC, chaque année les élèves sont confrontés à divers « working assignment »
+			destinés à des entreprises de domaines divers, tels que Nestlé, RTS, Galeries Lafayette, Alexander Wang, Vogue, Wmag... <br><br>
+
+			Due à son réseau très étendu, l'EdAC permet à ses diplômés de poursuivre leurs carrières professionnelles avec des entreprises 
+			et/ou bureaux de renom, ainsi que le bagage nécessaire à monter leur propre structure.<br></toto>
+		</toto>
+		
+		<nouvelles>
+		<b>HEADLINES</b><br>
+		<marquee width="100%" direction="up" loop="Infinite" scrollamount="3">
+			LITTLE INSIGHT ! VENEZ DECOUVRIR LES DERNIERS PROJETS D'ELEVES VENDREDI 13 JUIN A 10H.<br><br>
+
+			CEREMONIE DES DIPLÔMES 2014, VENDREDI 27 JUIN 2014<br>
+			A L'AUDITORIUM DE L'EdAC, 17H<br>
+			CH. DU CLOSELET 10, LAUSANNE<br><br>
+
+			FESTIVAL DES ARTISTES DU MERCREDI 16 JUILLET AU VENDREDI 18 JUILLET 2014<br>
+			EXPOSITIONS, PRESENTATIONS ET STANDS DE TOUT GENRE AU PROGRAMME<br><br>
+			
+			<center><IMG src="edac2.png"><center>
+		</marquee>
+		</nouvelles>
+		<script language="Javascript"> 
+		function connexion(){
+			var nom=prompt("Bonjour! Veuillez entrer votre nom d'utilisateur:");
+			var code=prompt("Veuillez entrer le code d'accès.");
+			for(i=0;i<3;i++){
+				if(code=="picasso"){
+				alert("Bonjour "+nom+"!");
+				connecté();
+				break;
+				}
+				else{
+				code=prompt("Veuillez réintroduire le code d'accès");
+				}
+			}
+		}
+		function connecté(){
+			document.write('<iframe src="htmlprojet_connexion.html" width="100%" height="100%"></iframe>');
+		}
+		function inscription(){
+			document.write('<iframe src="htmlprojet_inscription.html" width="100%" height="100%"></iframe>');
+			//window.open('htmlprojet_inscription.html');
+		}
+		function conditions(){
+			document.write('<iframe src="htmlprojet_conditions.html" width="100%" height="100%"></iframe>');
+		}
+		function prix(){
+			document.write('<iframe src="htmlprojet_prix.html" width="100%" height="100%"></iframe>');
+		}
+		function contact(){
+			document.write('<iframe src="htmlprojet_contact.html" width="100%" height="100%"></iframe>');
+		}
+		function profs(){
+			document.write('<iframe src="htmlprojet_profs.html" width="100%" height="100%"></iframe>');
+		}
+		</script>
+		<button type "button" onClick="connexion()"> Connexion </button><br><br>
+		<button type "button" onClick="conditions()"> Conditions d'inscription </button><br><br>
+		<button type "button" onClick="inscription()"> Inscription</button><br><br>
+		<button type "button" onClick="prix()"> Ecolage </button><br><br>
+		<button type "button" onClick="profs()"> Professeurs </button><br><br>
+		<button type "button" onClick="contact()"> Contact </button><br><br>
+	</body>
+</html>

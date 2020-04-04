@@ -1,0 +1,17 @@
+
+nouvelles{
+	text-align:justify;
+	position: absolute;
+	top:350px;
+	width:400px;
+	height:1000 px;
+	border-style:solid;
+	border-width:6 px;
+	border-color: #CCD1FD;
+	margin-left:17%;
+	border-radius:25px;
+	padding:5; 
+	background-color:#FBF4E6;
+	font-family:segoe script;
+	
+}
