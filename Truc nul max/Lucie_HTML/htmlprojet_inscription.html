@@ -1,0 +1,68 @@
+<html>
+	<head>
+		<link rel="stylesheet" type="text/CSS" href="cssprojet.css">
+	</head>
+	
+	<body>
+		<meta charset="UTF-8">
+		<form method=post action="mailto:ruth.munganga11@gyb.educanet2.ch">
+			<table cellspacing="2">
+				<tr>
+					<td colspan="2"><u>Inscription<u></td>
+				</tr>
+				<tr>
+					<td> Nom/Prénom </td>
+					<td><input type=text name="nom">
+				</tr>
+				<tr>
+					<td> Sexe </td>
+					<td><input type=radio name="sexe" value="M"> Homme
+						<input type=radio name="sexe" value="F"> Femme
+					</td>
+				</tr>
+				<tr>
+					<td> Etablissement actuel </td>
+					<td><input type=text name="etablissement actuel"></td>
+				</tr>
+				<tr>
+					<td> Date de naissance </td>
+					<td>
+					<script language="Javascript">
+					document.write( "<select name='jour naissance'>");
+					for(k=1;k<=31;k++){
+					document.write("<option value='k'>"+k);}
+					document.write("</select>");
+					
+					document.write( "<select name='mois naissance'>");
+					for(j=01;j<=12;j++){
+					document.write("<option value='j'>"+j);}
+					document.write("</select>");
+					
+					document.write( "<select name='année naissance'>");
+					for(i=1996;i>=1974;i--){
+					document.write("<option value='i'>"+i);}
+					document.write("</select>");
+					
+					</script>
+					</td>
+				</tr>
+				<tr>
+					<td>Adresse électronique</td>
+					<td> 
+				<tr>
+					<td>Commentaires</td>
+					<td><textarea rows="3" name = "commentaire"> Ici vos commentaires </textarea></td></tr>
+					
+					<tr><td><input type="submit" value="ENVOYER" onClick=retour()></tr></td>
+		</table>
+		
+		<script language="Javascript">
+		function retour(){
+		window.history.go(-1);
+		}
+		</script>
+		<br>
+		<br>
+		<a href="javascript:window.history.go(-1)">Retour à la page d'accueil</a>
+	</body>
+<html>
