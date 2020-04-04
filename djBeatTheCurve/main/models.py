@@ -29,4 +29,4 @@ class GameInfo(models.Model):
     last_leave = models.DateTimeField('last household leave')
     last_hand_wash = models.DateTimeField('last hand wash')
     last_physical_activity = models.DateTimeField('last physical activity')
-    score = models.IntegerField()
+    score = models.IntegerField(default=0)
