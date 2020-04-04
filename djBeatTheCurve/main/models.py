@@ -4,8 +4,44 @@ from django.utils.translation import gettext_lazy as _
 
 # Create your models here.
 
+class Symptom(models.Model):
+
+    class SymptomType(models.TextChoices):
+        NONE = 'NONE', _('None')
+        TASTE_LOSS = 'TASTE', _('Taste loss')
+        COLD = 'COLD', _('Cold')
+        COUGH = 'COUGH', _('Cough')
+        FEVER = 'FEVER', _('Fever')
+        RESPIRATORY_DIFFICULTIES = 'RESPIRATORY', _('Respitatory difficulties')
+        THROAT_SORENESS = 'THROAT', _('Throat soreness')
+        
+    name = models.CharField(
+        max_length=200,
+        choices=SymptomType.choices,
+        default=SymptomType.NONE,
+    )
+    
+    def __str__(self):
+        return f"""Symptom [
+            Name: {self.name}
+        ]
+        """
+
 class Commorbidity(models.Model):
-    name = models.CharField(max_length=200)
+
+    class CommorbidityType(models.TextChoices):
+        NONE = 'NONE', _('None')
+        DIABETES = 'DIABETES', _('Diabetes')
+        PRESSURE = 'PRESSURE', _('High blood pressure')
+        HEART = 'HEART', _('Heart Disease')
+        LUNG = 'LUNG', _('Lung Disease')
+        CANCER = 'CANCER', _('Cancer')
+
+    name = models.CharField(
+        max_length=200,
+        choices=CommorbidityType.choices,
+        default=CommorbidityType.NONE,
+    )
     
     def __str__(self):
         return f"""Commorbidity [
@@ -23,12 +59,13 @@ class CustomUser(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     age = models.PositiveIntegerField()
     gender = models.CharField(
-        max_length=2,
+        max_length=1,
         choices=Gender.choices,
         default=Gender.OTHER,
     )
     household_size = models.PositiveIntegerField(default=1)
     commorbidities = models.ManyToManyField(Commorbidity)
+    symptoms = models.ManyToManyField(Symptom)
 
     def __str__(self):
         return f"""CustomUser [
