@@ -2,11 +2,11 @@ from django.shortcuts import HttpResponse
 from django.shortcuts import render
 from django.http import QueryDict
 from django.http import HttpResponseRedirect
-from django.contrib.auth.models import UserManager
+from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth import authenticate, login
 
-from .models import CustomUser
+from django.db import models
 from .models import CustomUser, GameInfo
 from .models import Symptom
 
@@ -24,7 +24,9 @@ def customSignUp(request):
             print("Customuser form is valid")
             custom_user = form.save(commit=False)
             custom_user.user = request.user # Set custom user to current user
+            print(request.user)
             custom_user.save()
+            form.save_m2m()
 
             game_info = GameInfo(user=request.user)
             game_info.save()
@@ -47,7 +49,7 @@ def signUp(request):
             print("User successfully created")
             user_form.save()
 
-            return HttpResponseRedirect('customsignup')
+            return HttpResponseRedirect('signin')
         else:
             print("FAILED to create user")
             return render(request, 'main/sign_up_final.html', {'form': EasyUserCreationForm()})
@@ -64,11 +66,14 @@ def signIn(request):
 
         if user is not None:
             login(request, user)
-            HttpResponseRedirect('dashboard')
             print("LOGGED IN")
+            if CustomUser.objects.all().filter(user=user).exists():
+                return HttpResponseRedirect('dashboard')
+            else:
+                return HttpResponseRedirect('customsignup')
         else:
             print("FAILED TO LOG IN")
-            HttpResponseRedirect('signin')
+            return HttpResponseRedirect('signin')
     else:
         return render(request, 'main/sign_in_final.html', {'form': AuthenticationForm()})
 
