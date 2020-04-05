@@ -20,6 +20,45 @@
         html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
     </style>
     </style>
+    <style>
+        .slidecontainer {
+          width: 100%;
+        }
+        
+        .slider {
+          -webkit-appearance: none;
+          width: 100%;
+          height: 6px;
+          border-radius: 5px;
+          background: #d3d3d3;
+          outline: none;
+          opacity: 0.7;
+          -webkit-transition: .2s;
+          transition: opacity .2s;
+        }
+        
+        .slider:hover {
+          opacity: 1;
+        }
+        
+        .slider::-webkit-slider-thumb {
+          -webkit-appearance: none;
+          appearance: none;
+          width: 25px;
+          height: 25px;
+          border-radius: 50%;
+          background: #4CAF50;
+          cursor: pointer;
+        }
+        
+        .slider::-moz-range-thumb {
+          width: 12px;
+          height: 10px;
+          border-radius: 50%;
+          background: #4CAF50;
+          cursor: pointer;
+        }
+        </style>
 </head>
 
 <body class="w3-light-grey">
@@ -71,6 +110,10 @@
         <div class="w3-row">
             <div class="w3-container w3-twothird">
                 <div id="regions_div" class="w3-center w3-margin"></div>
+                <div class="slidecontainer">
+                    <input type="range" min="1" max="100" value="50" class="slider" id="myRange">
+                    <p>Day: <span id="demo"></span></p>
+                </div>
             </div>
             <div class="w3-container w3-third">
                 <h4>What happens in the world right now:</h4> 
@@ -107,4 +150,6 @@
 
 <!-- Animate wellness boxes -->
 <script src="js/updateWellnessBoxes.js"></script>
+
+
 </html>
