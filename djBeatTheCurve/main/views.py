@@ -32,7 +32,7 @@ def customSignUp(request):
     
     else:
         form = CustomSignUpForm()
-        return render(request, 'main/customsignup.html', {'form': form})
+        return render(request, 'main/custom_sign_up_final.html', {'form': form})
 
 def signUp(request):
     if request.method == 'POST':
@@ -46,11 +46,11 @@ def signUp(request):
             return HttpResponseRedirect('customsignup')
         else:
             print("FAILED to create user")
-            return render(request, 'main/signup.html', {'form': UserCreationForm()})
+            return render(request, 'main/sign_up_final.html', {'form': UserCreationForm()})
     else:
         user_form = UserCreationForm()
 
-        return render(request, 'main/signup.html', {'form': user_form})
+        return render(request, 'main/sign_up_final.html', {'form': user_form})
 
 def signIn(request):
     if request.method == 'POST':

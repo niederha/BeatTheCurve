@@ -22,6 +22,7 @@ class CustomSignUpForm(forms.ModelForm):
     class Meta:
         model = CustomUser
         fields = ['age', 'gender', 'household_size', 'commorbidities', 'symptoms']
+        widgets = {'commorbidities': forms.CheckboxSelectMultiple, 'symptoms': forms.CheckboxSelectMultiple}
 
 
 class SignInForm(forms.Form):
