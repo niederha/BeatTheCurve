@@ -10,6 +10,9 @@
 
     <!-- Google charts api -->
     <script src="https://www.gstatic.com/charts/loader.js"></script>
+
+    <!-- Custom made scripts -->
+    <script src="js/buttonHandler.js"></script>
     <script src="js/updateSimulationGraph.js"></script>
 
     <!-- External css sheets -->
@@ -18,6 +21,9 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
     <style>
         html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
+        .half-height{
+            height: 50%;
+        }
     </style>
 </head>
 
@@ -68,7 +74,55 @@
             </div>
         </div>
 
-        <div id="SimulationGraph" style="width: 900px; height: 500px"></div>
+        <!-- Graph and boxes-->
+        <div class="w3-row w3-margin-left">
+            <h4>What would happen:</h4>
+            <div class="w3-container w3-twothird">
+                <div id="SimulationGraph" class="w3-margin-left w3-margin-right" stlye="width: 900px; height: 500px"></div>
+            </div>
+            <div class="w3-container w3-third">
+                <div class="w3-container w3-teal w3-display-container">
+                    <div class="w3-right"><i class="far fa-smile w3-xxlarge w3-text-white w3-display-right w3-margin-right"></i>
+                    </div>
+                    <div class="w3-left">
+                        <h3 id="sim_nbSuceptible">No data</h3>
+                    </div>
+                </div>
+                <div class="w3-container w3-margin-bottom"></div>
+                <div class="w3-container w3-deep-orange w3-display-container">
+                    <div class="w3-right"><i
+                            class="far fa-sad-tear w3-xxlarge w3-text-white w3-display-right w3-margin-right"></i></div>
+                    <div class="w3-left">
+                        <h3 id="sim_nbSick">No data</h3>
+                    </div>
+                </div>
+                <div class="w3-container w3-margin-bottom"></div>
+                <div class="w3-container w3-blue-gray w3-display-container">
+                    <div class="w3-right"><i class="fas fa-dizzy w3-xxlarge w3-text-white w3-display-right w3-margin-right"></i>
+                    </div>
+                    <div class="w3-left">
+                        <h3 id="sim_nbDead">No data</h3>
+                    </div>
+                </div>
+                <div class="w3-container w3-margin-bottom"></div>
+                <div class="w3-container w3-green w3-display-container">
+                    <div class="w3-right "><i class="fas fa-users w3-xxlarge w3-text-white w3-display-right w3-margin-right"></i></div>
+                    <div class="w3-left">
+                        <h3 id="sim_nbImmune">No data</h3>
+                    </div>
+                </div>
+
+                <!-- Buttons -->
+                <div class="w3-container w3-margin-bottom"></div>
+                <div class="w3-bar">
+                    <button id="button1" class="w3-button w3-teal w3-border w3-border-teal">1</button>
+                    <button class="w3-button w3-black">2</button>
+                    <button class="w3-button w3-black">3</button>
+                </div>
+                <div class="w3-container w3-margin-bottom"></div>
+                    
+            </div>
+        </div>
     </div>
 
     <footer class="w3-container w3-padding-16 w3-light-grey">
