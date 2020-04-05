@@ -1,0 +1,66 @@
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Beat the Curve - Info-Quiz </title>
+        <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+        <link rel="stylesheet" href="css_quiz.css">
+        <meta name="description" content="The Dashboard">
+        <meta name="author" content="Lucie">
+        <script src="https://kit.fontawesome.com/9606692b7c.js" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <style>
+            html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
+        </style>
+
+    </head>
+
+    <body class="w3-light-grey">
+        <meta charset="UTF-8">
+        <div class="w3-bar w3-top w3-black w3-large" style="z-index:4">
+            <button class="w3-bar-item w3-button w3-hide-large w3-hover-none w3-hover-text-light-grey" onclick="w3_open();"><i class="fa fa-bars"></i> &nbsp;Menu</button>
+            <span class="w3-bar-item w3-right">Beat The Curve</span>
+        </div>
+
+        <div class="w3-container w3-quarter">
+            <i class="fa fas-award"></i>
+        </div>
+
+        <div class="w3-container w3-half w3-teal w3-center" style="margin-top:43px;">
+            <div class="w3-right">
+                <br><i class="fas fa-smile-wink"></i>
+            </div>
+            <h1><b>Info - Quiz !!</b></h1>
+            <h4>Inform yourself in a fun way</h4>
+        </div>
+
+        <div class="w3-container w3-half w3-yellow w3-center" style="margin-top:43px;">
+            kikou <br>
+            <script src="quiz_javascr.js"></script>
+        </div>
+        
+         <!-- WRONG -->
+         <div id="f0" class="w3-modal ">
+            <div class="w3-modal-content w3-light-gray w3-card-4 w3-animate-zoom" style="max-width:600px">
+          
+              <div class="w3-center w3-red">
+                <span onclick="document.getElementById('f0').style.display='none'" class="w3-button w3-xlarge w3-transparent w3-display-topright" title="Close Modal">×</span>
+                <h1>Wrong!</h1>
+              </div>
+        
+              <form class="w3-container w3-light-gray" >
+                <div class="w3-section w3-center">
+                    Try again...
+                </div>
+              </form>
+        
+              <div class="w3-container w3-border-top w3-center w3-padding-16 w3-light-grey">
+                <button onclick="document.getElementById('f0').style.display='none'" type="button" class="w3-button w3-red">OK !</button>
+              </div>
+        
+            </div>
+          </div>
+        </div>
+
+    </body>
+</html>
