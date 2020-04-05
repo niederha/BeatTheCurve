@@ -67,15 +67,16 @@ class CustomUser(models.Model):
             Age: {self.age},
             Gender: {self.gender},
             Household size: {self.household_size},
-            Commorbidities: {self.commorbidities}
+            Commorbidities: {self.commorbidities},
+            Symptoms: {self.symptoms}
         ]
         """
 
 class GameInfo(models.Model):
-    user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
-    last_leave = models.DateTimeField('last household leave')
-    last_hand_wash = models.DateTimeField('last hand wash')
-    last_physical_activity = models.DateTimeField('last physical activity')
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    last_leave = models.DateTimeField('last household leave', default=None, blank=True, null=True)
+    last_hand_wash = models.DateTimeField('last hand wash', default=None, blank=True, null=True)
+    last_physical_activity = models.DateTimeField('last physical activity', default=None, blank=True, null=True)
     score = models.IntegerField(default=0)
 
     def __str__(self):

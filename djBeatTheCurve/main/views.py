@@ -7,6 +7,7 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth import authenticate, login
 
 from .models import CustomUser
+from .models import CustomUser, GameInfo
 from .models import Symptom
 
 from .forms import CustomSignUpForm, EasyUserCreationForm
@@ -24,6 +25,9 @@ def customSignUp(request):
             custom_user = form.save(commit=False)
             custom_user.user = request.user # Set custom user to current user
             custom_user.save()
+
+            game_info = GameInfo(user=request.user)
+            game_info.save()
 
             print("Successfully save custom user, redirecting to dashboard")
             return HttpResponseRedirect('dashboard')
@@ -71,11 +75,14 @@ def signIn(request):
 def dashboard(request):
     print("HELLO FROM DASHBOARD")
 
-    cuser = CustomUser.objects.get(user=request.user)
-    top_cuser = CustomUser.objects.order_by('-score')
-    top_size = min(top_cuser.count, 4)
-    top_cuser = top_cuser[:4]
+    cuser = GameInfo.objects.get(user=request.user)
+    top_cusers = GameInfo.objects.order_by('-score')
+    top_size = min(top_cusers.count(), 4)
+    top_cusers = top_cusers[:4]
+    #test_users = CustomUser.objects.filter(symptoms__name__in=[Symptom.SymptomType.COUGH, Symptom.SymptomType.FEVER])
+    #print(test_users)
 
+    return render(request, 'main/dashboard_final.html', {'saved':123, 'score':cuser.score, 'top_cusers':top_cusers})
 
 
 
