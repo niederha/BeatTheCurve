@@ -1,4 +1,7 @@
 <!DOCTYPE html>
+
+{% load filters %}
+
 <html>
 <head>
     
@@ -34,7 +37,7 @@
             <p></p>
         </div>
 
-        <div class="w3-half w3-container">
+        <div class="w3-half w3-container w3-card">
             <div class="w3-container w3-padding-16">
                 <div class="w3-container w3-teal">
                     <h2>Daily logs</h2>
@@ -49,14 +52,18 @@
                 </div>
                 <form action="daily.html" method= "POST" formaction  = "URL" >
 
+                    {% csrf_token %}
+            
+
                     <div class="w3-container w3-row">
                         <p>
                         <label for="option" class=" w3-text-teal">
                             <b>Did you go out more than 15 minutes today? :</b>
                         </label>
                         </p>
-                        <button type="submit" class="w3-btn w3-blue-grey">Yes</button>
-                        <button id = sign_in class="w3-btn w3-blue-grey" >No</button>
+                     <!--    <button type="submit" class="w3-btn w3-blue-grey">Yes</button>
+                        <button id = sign_in class="w3-btn w3-blue-grey" >No</button> -->
+                        {{ form.outings }}
                     </div>
                     
                     <div class="w3-container">
@@ -73,8 +80,7 @@
                                     <b><br>Did you wash your hands when comming back home:</b>
                                 </label>
                                 </p>
-                                <button type="submit" class="w3-btn w3-blue-grey">Yes</button>
-                                <button id = sign_in class="w3-btn w3-blue-grey" >No</button>
+                                {{ form.hands_wash }}
                                 
                             </div>
 
@@ -82,6 +88,7 @@
                                     <label class="w3-text-teal">
                                         <b><br>Why did you go out?</b>
                                     </label><br><br>
+                                    {{ form.why_outings }}
                                     <input type="checkbox">To go grocery shopping <i class="fas fa-shopping-basket"></i><br>
                                     <input type="checkbox">To see a doctor/ go to the hospital <i class="fas fa-stethoscope"></i><br>
                                     <input type="checkbox">To meet friends <i class="fas fa-smile-beam"></i><br>
