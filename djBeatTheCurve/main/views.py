@@ -7,10 +7,10 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth import authenticate, login
 
 from django.db import models
-from .models import CustomUser, GameInfo
+from .models import CustomUser, GameInfo, LogEntry
 from .models import Symptom
 
-from .forms import CustomSignUpForm, EasyUserCreationForm
+from .forms import CustomSignUpForm, EasyUserCreationForm, LogEntryForm
 
 # Create your views here.
 def index(request):
@@ -90,48 +90,23 @@ def dashboard(request):
     return render(request, 'main/dashboard_final.html', {'saved':123, 'score':cuser.score, 'top_cusers':top_cusers})
 
 
+def daily(request):
+    print ("HELLO FROM DAILY")
 
+    if request.method == 'POST':
+        form = LogEntryForm(request.POST)
 
+        if form.is_valid():
+            print("LogEntry form is valid")
+            log_entry = form.save(commit=False)
+            log_entry.user = request.user # Set log entry to current user
+            log_entry.save()
+            form.save_m2m()
 
-# def signIn(request):
-#     if request.method == 'POST':
-#         user_form = UserCreationForm(request.POST)
-
-#         if user_form.is_valid():
-#             user_form.save()
-
-#         return HttpResponseRedirect('')
-#     else:
-#         user_form = UserCreationForm()
-
-#         return render(request, 'main/signup.html', {'form': user_form})
-
-
-# def signUp(request):
+            print("Successfully save log entry, redirecting to dashboard")
+            return HttpResponseRedirect('dashboard')
+        else:
+            return HttpResponseRedirect('daily')
     
-#     if request.method == 'POST':
-#         print("HELLO GUYS")
-#         print(request.POST)
-
-#         username = request.POST['username']
-#         password = request.POST['password']
-#         email = request.POST['email']
-
-#         UserManager.create_user(username, password=password, email=email)
-#         user.set_password(password)
-#         custom_user_form = SignUpForm(request.POST or None)
-        
-#         if custom_user_form.is_valid():
-#             print("EVERYTHING IS VALID")
-
-#             custom_user = custom_user_form.save(commit='False')
-#             custom_user.user = user
-#             custom_user.save()
-
-#             return HttpResponseRedirect('') # TODO
-
-#         print(f"Some form in invalid: custom_user_form:{custom_user_form.is_valid()} ")
-#     else:
-#         custom_user_form = SignUpForm()
-
-#     return render(request, 'main/signup.html', {'custom_user_form': custom_user_form})
+    else:
+        return render(request, 'main/daily_test.html', {'form': LogEntryForm()})
