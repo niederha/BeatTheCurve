@@ -60,11 +60,11 @@ def signIn(request):
 
         if user is not None:
             login(request, user)
-            HttpResponseRedirect('dashboard')
             print("LOGGED IN")
+            return HttpResponseRedirect('dashboard')
         else:
             print("FAILED TO LOG IN")
-            HttpResponseRedirect('signin')
+            return HttpResponseRedirect('signin')
     else:
         return render(request, 'main/sign_in_final.html', {'form': AuthenticationForm()})
 
