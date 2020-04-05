@@ -1,0 +1,193 @@
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Beat the Curve - Dashboard </title>
+        <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+        <meta name="description" content="The Dashboard">
+        <meta name="author" content="Lucie">
+        <script src="https://kit.fontawesome.com/9606692b7c.js" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <style>
+            html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
+        </style>
+
+    </head>
+
+    <body class="w3-light-grey">
+        <meta charset="UTF-8">
+        <div class="w3-bar w3-top w3-black w3-large" style="z-index:4">
+            <button class="w3-bar-item w3-button w3-hide-large w3-hover-none w3-hover-text-light-grey" onclick="w3_open();"><i class="fa fa-bars"></i> &nbsp;Menu</button>
+            <span class="w3-bar-item w3-right">Beat The Curve</span>
+        </div>
+
+
+        <nav class="w3-sidebar w3-collapse w3-white w3-animate-left" style="z-index:3;width:200px;" id="mySidebar"><br>
+            <div class="w3-container w3-row">
+              <div class="w3-col s4">
+                <img src="/w3images/avatar2.png" class="w3-circle w3-margin-right" style="width:46px">
+              </div>
+              <div class="w3-col s8 w3-bar">
+                <span>Welcome, <strong>Mike</strong></span><br>
+                <a href="#" class="w3-bar-item w3-button"><i class="fa fa-envelope"></i></a>
+                <a href="#" class="w3-bar-item w3-button"><i class="fa fa-user"></i></a>
+                <a href="#" class="w3-bar-item w3-button"><i class="fa fa-cog"></i></a>
+              </div>
+            </div>
+            <hr>
+            <div class="w3-container">
+              <h5>Dashboard</h5>
+            </div>
+            <div class="w3-bar-block">
+              <a href="#" class="w3-bar-item w3-button w3-padding-16 w3-hide-large w3-dark-grey w3-hover-black" onclick="w3_close()" title="close menu"><i class="fa fa-remove fa-fw"></i>&nbsp; Close Menu</a>
+              <a href="#" class="w3-bar-item w3-button w3-padding w3-pale-blue"><i class="fa fa-users fa-fw"></i>&nbsp; Overview</a>
+              <a href="#" class="w3-bar-item w3-button w3-padding"><i class="fa fa-eye fa-fw"></i>&nbsp; Country extrapolation</a>
+              <a href="#" class="w3-bar-item w3-button w3-padding"><i class="fa fa-globe-americas fa-fw"></i>&nbsp; Current situation</a>
+              <a href="#" class="w3-bar-item w3-button w3-padding"><i class="fa fa-chart-bar fa-fw"></i>&nbsp; Simulation</a>
+              <a href="#" class="w3-bar-item w3-button w3-padding w3-pale-yellow"><i class="fa fa-exclamation fa-fw"></i>&nbsp; My actions</a>
+              <a href="#" class="w3-bar-item w3-button w3-padding"><i class="fa fa-bell fa-fw"></i>&nbsp; News</a>
+              <a href="#" class="w3-bar-item w3-button w3-padding"><i class="fa fa-bank fa-fw"></i>&nbsp; General</a>
+              <a href="#" class="w3-bar-item w3-button w3-padding"><i class="fa fa-history fa-fw"></i>&nbsp; History</a>
+              <a href="#" class="w3-bar-item w3-button w3-padding"><i class="fa fa-cog fa-fw"></i>&nbsp; Settings</a><br><br>
+            </div>
+        </nav>
+        
+        
+        <div class="w3-main" style="margin-left:200px;margin-top:43px;">
+            <center><h1>Dashboard</h1></center>
+            <div class="w3-row-padding w3-margin-bottom">
+                <div class="w3-quarter"> 
+                    <IMG src="BTC.png" height="100px"\> 
+                </div>
+                <div class="w3-quarter">
+                    <div class="w3-container w3-teal w3-padding-16">
+                        <div class="w3-right">
+                            <i class="fa fa-user-nurse"></i> 
+                        </div>  
+                        <h5>
+                            You saved {{ saved }} people!
+                            <!-- <script language="Javascript">
+                                var saved = 152;
+                                document.write("You saved "+saved+" people!");
+                            </script> -->
+                        </h5>
+                        
+                    </div>     
+                </div> 
+                <div class="w3-quarter">
+                    <div class="w3-container w3-orange w3-padding-16">
+                        <div class="w3-right">
+                            <i class="fa fa-dollar-sign"></i> 
+                        </div>  
+                        <h4>
+                            <b> {{ score }} </b> points
+                            <!-- <script language="Javascript">
+                                var points = 1931;
+                                document.write("<b>"+points+"</b> points");
+                            </script> -->
+                        </h4>  
+                    </div>     
+                </div>
+                <div class="w3-quarter"></div> 
+            </div>
+            
+            
+            <div class="w3-half"><center><h5>Trophies:</h5><br>
+                <h1>
+                    <i class="fa fa-toilet-paper"></i>
+                </h1><br>
+                <h1>
+                    <i class="fa fa-trophy"></i>
+                </h1><br>
+                <h1>
+                    <i class="fa fa-dragon"></i>
+                </h1>
+                <br><br><br><br>
+                </center>
+            </div>
+
+
+            <div class="w3-third">
+                    <h5>Leader Board</h5>
+                    <table class="w3-table w3-striped w3-white">
+                        <tbody>
+                            {% for top_cuser in top_cusers %}
+                                <tr>
+                                    <td>
+                                    <i class="fas fa-skiing"></i>
+                                    </td>
+                                    <td>
+                                        {{ top_cuser.user.username }}
+                                        <!-- <script language="Javascript">
+                                            var name = "PeAch230";
+                                            document.write(name);
+                                        </script> -->
+                                    </td>
+                                    <td>
+                                        {{ top_cuser.score }} points
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            <!-- <tr>
+                                <td>
+                                <i class="fas fa-skiing"></i>
+                                </td>
+                                <td>
+                                    <script language="Javascript">
+                                        var name = "PeAch230";
+                                        document.write(name);
+                                    </script>
+                                </td>
+                                <td>
+                                    19473 points
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                <i class="fas fa-baby"></i>
+                                </td>
+                                <td>
+                                    <script language="Javascript">
+                                        var name = "TheBest98";
+                                        document.write(name);
+                                    </script>
+                                </td>
+                                <td>18132 points</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                <i class="fas fa-biking"></i>
+                                </td>
+                                <td>bik3rrr</td>
+                                <td>16039 points</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                <i class="fas fa-user-astronaut"></i>
+                                </td>
+                                <td>papoc43</td>
+                                <td>16002 points</td>
+                            </tr> -->
+                        </tbody>
+                    </table>
+                <br>
+            </div>
+            <div class="w3-half">
+                <h3>Advice</h3>
+                <p>
+                    <li>
+                        Try to avoid to go out and mostly meet people
+                    </li>
+                    <li>
+                        Wash your hands
+                    </li>
+                    <li>
+                        Help people in need so that they can stay home
+                    </li>
+                </p>
+            </div>
+        </div>
+          
+        
+    </body>
+</html>
