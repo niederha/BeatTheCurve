@@ -6,7 +6,9 @@ from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from django.utils.translation import ugettext_lazy as _
 
-
+class EasyUserCreationForm(UserCreationForm):
+    def _post_clean(self):
+        super(UserCreationForm, self)._post_clean()
 
 class CustomSignUpForm(forms.ModelForm):
     # age = forms.IntegerField(min_value=0)

@@ -9,7 +9,7 @@ from django.contrib.auth import authenticate, login
 from .models import CustomUser
 from .models import Symptom
 
-from .forms import CustomSignUpForm
+from .forms import CustomSignUpForm, EasyUserCreationForm
 
 # Create your views here.
 def index(request):
@@ -36,7 +36,7 @@ def customSignUp(request):
 
 def signUp(request):
     if request.method == 'POST':
-        user_form = UserCreationForm(request.POST)
+        user_form = EasyUserCreationForm(request.POST)
 
         print(user_form)
         if user_form.is_valid():
@@ -46,9 +46,9 @@ def signUp(request):
             return HttpResponseRedirect('customsignup')
         else:
             print("FAILED to create user")
-            return render(request, 'main/sign_up_final.html', {'form': UserCreationForm()})
+            return render(request, 'main/sign_up_final.html', {'form': EasyUserCreationForm()})
     else:
-        user_form = UserCreationForm()
+        user_form = EasyUserCreationForm()
 
         return render(request, 'main/sign_up_final.html', {'form': user_form})
 
