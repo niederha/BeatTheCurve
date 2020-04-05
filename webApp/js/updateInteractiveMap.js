@@ -5,7 +5,7 @@ google.charts.setOnLoadCallback(drawRegionsMap);
 function drawRegionsMap() {
 
     var data = google.visualization.arrayToDataTable([
-        ['Country', 'Popularity'],
+        ['Country', 'Number cases'],
         ['Germany', 200],
         ['United States', 300],
         ['Brazil', 400],
@@ -16,10 +16,8 @@ function drawRegionsMap() {
 
     var options = {
         backgroundColor: {fill:"transparent"},
-        colorAxis: { colors: ['green', 'red', 'black'] }
+        colorAxis: {minValue: 0, maxValue: 1000, colors: ['green', 'red', 'black']},
     };
-
     var chart = new google.visualization.GeoChart(document.getElementById('regions_div'));
-
     chart.draw(data, options);
 }

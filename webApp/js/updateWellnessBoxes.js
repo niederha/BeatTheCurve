@@ -1,6 +1,6 @@
 
 // Update figures 
-document.getElementById("nbHealthy").innerHTML = 1;
-document.getElementById("nbSick").innerHTML    = 2;
-document.getElementById("nbDead").innerHTML    = 3;
-document.getElementById("nbImmune").innerHTML  = 4;
+document.getElementById("nbSuceptible").innerHTML   = 12345656;
+document.getElementById("nbSick").innerHTML         = 1234789;
+document.getElementById("nbDead").innerHTML         = 324789017;
+document.getElementById("nbImmune").innerHTML       = 1723849;
