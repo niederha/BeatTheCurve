@@ -88,3 +88,44 @@ class GameInfo(models.Model):
             Score: {self.score}
         ]
         """
+
+class OutingReason(models.Model):
+
+    class OutingReasonChoice(models.TextChoices):
+        GROCERY = 'GROCERY_SHOPPING', _('Grocery shopping')
+        MEDICAL = 'MEDICAL', _('Medical reasons')
+        FRIENDS = 'FRIENDS', _('Meet friends')
+        DOG = 'DOG', _('Walk your dog (alone)')
+        EXERCISE = 'EXERCISE', _('Exercise (alone)')
+
+    name = models.CharField(
+        max_length=200,
+        choices=OutingReasonChoice.choices,
+        default=None,
+    )
+
+    def __str__(self):
+        return self.name
+
+class LogEntry(models.Model):
+
+    class HandWashRanges(models.TextChoices):
+        LOW = 'L', _('Less than 3 times')
+        MIDDLE = 'M', _('More than 3 times, but less than 6')
+        HIGH = 'H', _('6 times or more')
+    
+
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='log_user')
+    date = models.DateTimeField('Entry date')
+    hand_wash_frequency = models.CharField(
+        max_length=1,
+        choices=HandWashRanges.choices,
+        default=HandWashRanges.MIDDLE,
+    )
+    leave = models.BooleanField(default='n', choices=[('n', 'No'), ('y', 'Yes')])
+    crowded_places = models.BooleanField(default='n', choices=[('n', 'No'), ('y', 'Yes')], blank=True, null=True)
+    hand_wash_after_leave = models.BooleanField(default='y', choices=[('n', 'No'), ('y', 'Yes')], blank=True, null=True)
+    reason = models.ManyToManyField(OutingReason, default=None, blank=True)
+
+
+
