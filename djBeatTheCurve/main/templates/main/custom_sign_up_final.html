@@ -1,5 +1,7 @@
 <!doctype html>
 
+{% load filters %}
+
 <html lang="en">
 <head>
     <meta charset="utf-8">
@@ -24,39 +26,73 @@
     </div>
    
     <div class="w3-main" style="margin-left:300px;margin-top:43px;"></div>
-        <header class="w3-container" style="padding-top:22px">
+        <header class="w3-container w3-center" style="padding-top:22px">
             <h3><b> <i class="fas fa-address-card"></i> Sign up</b></h3>
         </header>
-    <div class="w3-container"> 
-        <form action="{% url 'customsignup' %}" method="post">
-            {% csrf_token %}
-            <table cellspacing="2">
-                <tr>
-                    <td> Age </td>
-                    <td> {{ form.age }} </td>
-                </tr>
-                <tr>
-                    <td> Gender </td>
-                    {{ form.gender }}
-                </tr>
-                <tr>
-                    <td> Househole size </td>
-                    <td> {{ form.household_size }} </td>
-                </tr>
-                <tr>
-                    <td> Comorbidities </td>
-                    <td> {{ form.commorbidities }} </td>
-                </tr>
-                <tr>
-                    <td> Current Symptoms </td>
-                    <td> {{ form.symptoms }} </td>
-                </tr>
+    <div class="w3-container w3-row"> 
 
-            </table>
-            <p>
-                <input class="w3-button w3-blue-grey" type="submit" value="Next">
-            </p>
-        </form>
+        <div class="w3-quarter">
+            <p></p>
+        </div>
+        <div class="w3-half w3-card">
+            <div class="w3-container w3-teal">
+                <h2>Custom informations</h2>
+            </div>
+            <form action="{% url 'signup' %}" method="post">
+                {% csrf_token %}
+                
+                <div class="w3-container">
+                    <p>
+                        <label class="w3-text-teal">
+                            <i class="fas fa-baby"></i> <b>Age</b>
+                        </label>
+                        {{ form.age }}</td>
+                    </p>
+                </div>
+
+                <div class="w3-container">
+                    <p>
+                        <label class="w3-text-teal">
+                            <i class="fas fa-genderless"></i> <b>Gender</b>
+                        </label>
+                        {{ form.gender }} </td>
+                    </p>
+                </div>
+
+                <div class="w3-container">
+                    <p>                       
+                        <label class="w3-text-teal">
+                            <i class="fas fa-home"></i> <b>Household size</b>
+                        </label>
+                        {{ form.household_size }} 
+                    </p>
+                </div>
+
+                <div class="w3-container">
+                    <p>                       
+                        <label class="w3-text-teal">
+                            <i class="fas fa-disease"></i> <b>Comorbidities</b>
+                        </label>
+                        {{ form.commorbidities }} 
+                    </p>
+                </div>
+
+                <div class="w3-container">
+                    <p>                       
+                        <label class="w3-text-teal">
+                            <i class="fas fa-stethoscope"></i> <b>Current symptoms</b>
+                        </label>
+                        {{ form.symptoms }} 
+                    </p>
+                </div>
+
+                <div class="w3-container">
+                    <p>
+                        <input class="w3-button w3-blue-grey" type="submit" value="Sign up">
+                    </p>
+                </div>
+            </form>
+        </div>
     </div> 
 </body>
 </html>
