@@ -57,6 +57,7 @@
                 <div class="w3-container w3-teal">
                     <h2>Login</h2>
                 </div>
+
                 <form action="{% url 'signin' %}" method="post">
                     {% csrf_token %}
                     <div class="w3-container">
@@ -79,7 +80,7 @@
                     <div class="w3-container">
                         <p>
                         <div class="w3-left">
-                            <input type="submit" class="w3-btn w3-blue-grey" value="<Sign in>" >
+                            <input type="submit" class="w3-btn w3-blue-grey" value="Sign in" >
                         </div>
                         <div class="w3-right">
                             <!-- <a href="#">Forgot Password?</a>    -->

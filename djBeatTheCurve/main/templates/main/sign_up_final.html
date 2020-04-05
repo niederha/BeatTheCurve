@@ -1,5 +1,7 @@
 <!doctype html>
 
+{% load filters %}
+
 <html lang="en">
 <head>
     <meta charset="utf-8">
@@ -24,31 +26,54 @@
     </div>
    
     <div class="w3-main" style="margin-left:300px;margin-top:43px;"></div>
-        <header class="w3-container" style="padding-top:22px">
+        <header class="w3-container w3-center" style="padding-top:22px">
             <h3><b> <i class="fas fa-address-card"></i> Sign up</b></h3>
         </header>
-    <div class="w3-container"> 
-        <form action="{% url 'signup' %}" method="post">
-            {% csrf_token %}
-            <table cellspacing="2">
-                <tr>
-                    <td> Username </td>
-                    <td> {{ form.username }} </td>
-                </tr>
-                <tr>
-                    <td> Password </td>
-                    <td> {{ form.password1 }} </td>
-                </tr>
-                <tr>
-                    <td> Password Confirmation </td>
-                    <td> {{ form.password2 }} </td>
-                </tr>
+    <div class="w3-container w3-row"> 
 
-            </table>
-            <p>
-                <input class="w3-button w3-blue-grey" type="submit" value="Sign up">
-            </p>
-        </form>
+        <div class="w3-quarter">
+            <p></p>
+        </div>
+        <div class="w3-half w3-card">
+            <div class="w3-container w3-teal">
+                <h2>Identification informations</h2>
+            </div>
+            <form action="{% url 'signup' %}" method="post">
+                {% csrf_token %}
+                
+                <div class="w3-container">
+                    <p>
+                        <label class="w3-text-teal">
+                            <i class="fas fa-user"></i> <b>Username</b>
+                        </label>
+                        {{ form.username|addClass:"w3-input w3-border w3-light-grey" }}</td>
+                    </p>
+                </div>
+
+                <div class="w3-container">
+                    <p>
+                        <label class="w3-text-teal">
+                            <i class="fas fa-lock"></i> <b>Password</b>
+                        </label>
+                        {{ form.password1|addClass:"w3-input w3-border w3-light-grey" }} </td>
+                    </p>
+                </div>
+
+                <div class="w3-container">
+                    <p>                       
+                        <label class="w3-text-teal">
+                            <i class="fas fa-lock"></i> <b>Password Confirmation </b>
+                        </label>
+                        {{ form.password2|addClass:"w3-input w3-border w3-light-grey" }} 
+                    </p>
+                </div>
+                <div class="w3-container">
+                    <p>
+                        <input class="w3-button w3-blue-grey" type="submit" value="Sign up">
+                    </p>
+                </div>
+            </form>
+        </div>
     </div> 
 </body>
 </html>
