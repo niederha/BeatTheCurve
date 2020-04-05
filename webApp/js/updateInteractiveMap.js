@@ -1,6 +1,7 @@
 
 google.charts.load('current', {'packages': ['geochart']});
 google.charts.setOnLoadCallback(drawRegionsMap);
+window.onresize = drawRegionsMap;
 
 function drawRegionsMap() {
 
