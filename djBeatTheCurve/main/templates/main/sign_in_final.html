@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+
+{% load filters %}
+
+<html>
+<head>
+    
+	<meta charset="UTF-8">
+    <title>Beat the curve - Sign in</title>
+    <meta name="description" content="An attempt to make login page">
+    <meta name="author" content="Max Dupont">
+   <!--  <link rel="stylesheet" type="text/css" href="css/style.css"> -->
+    <script src="https://kit.fontawesome.com/9606692b7c.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
+    </style>
+</head>
+
+<body class="w3-light-grey">
+    <div class="w3-bar w3-top w3-black w3-large" style="z-index:4">
+        <span class="w3-bar-item w3-right">Beat The Curve</span>
+        <span class="w3-bar-item w3-left">Feel the spread</span>
+    </div>
+
+    <div class="w3-main" style="margin-left:300px;margin-top:43px;"></div>
+        <header class="w3-container " style="padding-top:22px">
+            <div class="w3-container">
+                <h3><b> <i class="fas fa-address-card "></i> Sign in infos</b></h3>
+            </div>
+        </header>
+
+    <div class="w3-row-padding w3-margin-bottom">
+
+
+        <div class="w3-half">
+            <div class="w3-container w3-padding-16">
+                <div class="w3-left">
+                    <img src="img/Beat_the_curve.png" style="width:100%">
+                </div>
+                <div class="w3-clear"></div>
+            </div>
+        </div>  
+    
+        <div class="w3-half">
+            <div class="w3-container w3-padding-16">
+
+                <div class="w3-container w3-teal">
+                    <h2>Welcome to Beat the Curve</h2>
+                </div>
+                <div class="w3-container">
+                    <p>Welcome to Beat the Curve, an app made to visualize coronavirus spread and see how YOU can flaten this the growth curve by adopting the right behaviours</p>
+                </div>
+
+                <div class="w3-container w3-teal">
+                    <h2>Login</h2>
+                </div>
+                <form action="Login.html" method= "GET"  >
+                    <div class="w3-container">
+                        <p>
+                        <label class="w3-text-teal">
+                            <i class="fas fa-user"></i> <b>Username</b>
+                        </label>
+                        {{ form.username|addClass:"w3-input w3-border w3-light-grey" }}
+                        </p>
+                    </div>
+
+                    <div class="w3-container">
+                        <p>
+                        <label class="w3-text-teal">
+                            <i class="fas fa-lock"></i> <b>Password</b></label>
+                        {{ form.password|addClass:"w3-input w3-border w3-light-grey" }}
+                        </p>
+                    </div>
+
+                    <div class="w3-container">
+                        <p>
+                        <div class="w3-left">
+                            <input type="submit" class="w3-btn w3-blue-grey" value="<Sign in>" >
+                        </div>
+                        <div class="w3-right">
+                            <!-- <a href="#">Forgot Password?</a>    -->
+                            No account yet ?
+                            <a href="{% url 'signup' %}" class="w3-button w3-blue-grey">Sign up</a>
+                        </div>
+                        </p>
+                    </div> 
+                </form>
+                <div class="w3-container">
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript" src="js/main.js"></script>
+</body>
+</html>
+
+

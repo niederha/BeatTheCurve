@@ -66,10 +66,17 @@ def signIn(request):
             print("FAILED TO LOG IN")
             HttpResponseRedirect('signin')
     else:
-        return render(request, 'main/signin.html', {'form': AuthenticationForm()})
+        return render(request, 'main/sign_in_final.html', {'form': AuthenticationForm()})
 
 def dashboard(request):
     print("HELLO FROM DASHBOARD")
+
+    cuser = CustomUser.objects.get(user=request.user)
+    top_cuser = CustomUser.objects.order_by('-score')
+    top_size = min(top_cuser.count, 4)
+    top_cuser = top_cuser[:4]
+
+
 
 
 
