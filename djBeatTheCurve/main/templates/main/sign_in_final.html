@@ -57,7 +57,8 @@
                 <div class="w3-container w3-teal">
                     <h2>Login</h2>
                 </div>
-                <form action="Login.html" method= "GET"  >
+                <form action="{% url 'signin' %}" method="post">
+                    {% csrf_token %}
                     <div class="w3-container">
                         <p>
                         <label class="w3-text-teal">
