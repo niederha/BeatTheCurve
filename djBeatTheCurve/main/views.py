@@ -2,14 +2,21 @@ from django.shortcuts import HttpResponse
 from django.shortcuts import render
 from django.http import QueryDict
 from django.http import HttpResponseRedirect
-from django.contrib.auth.models import UserManager
+from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth import authenticate, login
+from django.conf import settings
 
-from .models import CustomUser
+from django.db.models import Case, When, Value, Window, F, Avg, Min, ValueRange, IntegerField
+from .models import CustomUser, GameInfo, LogEntry
 from .models import Symptom
 
-from .forms import CustomSignUpForm
+
+from .forms import CustomSignUpForm, EasyUserCreationForm, LogEntryForm
+
+from datetime import datetime, timedelta
+
+import pandas as pd
 
 # Create your views here.
 def index(request):
@@ -23,7 +30,12 @@ def customSignUp(request):
             print("Customuser form is valid")
             custom_user = form.save(commit=False)
             custom_user.user = request.user # Set custom user to current user
+            print(request.user)
             custom_user.save()
+            form.save_m2m()
+
+            game_info = GameInfo(user=request.user)
+            game_info.save()
 
             print("Successfully save custom user, redirecting to dashboard")
             return HttpResponseRedirect('dashboard')
@@ -36,19 +48,19 @@ def customSignUp(request):
 
 def signUp(request):
     if request.method == 'POST':
-        user_form = UserCreationForm(request.POST)
+        user_form = EasyUserCreationForm(request.POST)
 
         print(user_form)
         if user_form.is_valid():
             print("User successfully created")
             user_form.save()
 
-            return HttpResponseRedirect('customsignup')
+            return HttpResponseRedirect('signin')
         else:
             print("FAILED to create user")
-            return render(request, 'main/sign_up_final.html', {'form': UserCreationForm()})
+            return render(request, 'main/sign_up_final.html', {'form': EasyUserCreationForm()})
     else:
-        user_form = UserCreationForm()
+        user_form = EasyUserCreationForm()
 
         return render(request, 'main/sign_up_final.html', {'form': user_form})
 
@@ -61,7 +73,10 @@ def signIn(request):
         if user is not None:
             login(request, user)
             print("LOGGED IN")
-            return HttpResponseRedirect('dashboard')
+            if CustomUser.objects.all().filter(user=user).exists():
+                return HttpResponseRedirect('dashboard')
+            else:
+                return HttpResponseRedirect('customsignup')
         else:
             print("FAILED TO LOG IN")
             return HttpResponseRedirect('signin')
@@ -71,55 +86,114 @@ def signIn(request):
 def dashboard(request):
     print("HELLO FROM DASHBOARD")
 
-    cuser = CustomUser.objects.get(user=request.user)
-    top_cuser = CustomUser.objects.order_by('-score')
-    top_size = min(top_cuser.count, 4)
-    top_cuser = top_cuser[:4]
+    cuser = GameInfo.objects.get(user=request.user)
+    top_cusers = GameInfo.objects.order_by('-score')
+    top_size = min(top_cusers.count(), 4)
+    top_cusers = top_cusers[:4]
+    #test_users = CustomUser.objects.filter(symptoms__name__in=[Symptom.SymptomType.COUGH, Symptom.SymptomType.FEVER])
+    #print(test_users)
+
+    return render(request, 'main/dashboard_final.html', {'saved':123, 'score':cuser.score, 'top_cusers':top_cusers})
 
 
+def daily(request):
+    if request.method == 'POST':
+        form = LogEntryForm(request.POST)
 
+        if form.is_valid():
+            print("LogEntry form is valid")
+            log_entry = form.save(commit=False)
+            log_entry.user = request.user # Set log entry to current user
+            log_entry.date = datetime.now(settings.TIME_ZONE)
+            log_entry.save()
+            form.save_m2m()
 
-
-
-# def signIn(request):
-#     if request.method == 'POST':
-#         user_form = UserCreationForm(request.POST)
-
-#         if user_form.is_valid():
-#             user_form.save()
-
-#         return HttpResponseRedirect('')
-#     else:
-#         user_form = UserCreationForm()
-
-#         return render(request, 'main/signup.html', {'form': user_form})
-
-
-# def signUp(request):
+            print("Successfully save log entry, redirecting to dashboard")
+            return HttpResponseRedirect('dashboard')
+        else:
+            print("LogEntry form is NOT valid")
+            return HttpResponseRedirect('daily')
     
-#     if request.method == 'POST':
-#         print("HELLO GUYS")
-#         print(request.POST)
+    else:
+        return render(request, 'main/daily.html', {'form': LogEntryForm()})
 
-#         username = request.POST['username']
-#         password = request.POST['password']
-#         email = request.POST['email']
 
-#         UserManager.create_user(username, password=password, email=email)
-#         user.set_password(password)
-#         custom_user_form = SignUpForm(request.POST or None)
+def simulation(request):
+    def crowded_places_frequentation_mean(user):
+        user_logs = LogEntry.objects.filter(log_user=user)
+        user_logs = user_logs.annotate(
+            crowded_outing=Case(
+                When(crowded_places='y', then=Value(1)),
+                default=Value(0),
+                output_field=IntegerField
+            ),
+        ).values_list('log_user', 'date', 'crowded_outing')
+        user_logs_list = list(user_logs)
+
+        # Ugly but will suffice as proof of concept as sqlite does not implement moving average and coding it in django is awful..
         
-#         if custom_user_form.is_valid():
-#             print("EVERYTHING IS VALID")
+        # Problem: Rolling average over missing daily logs that a replaced with the value 0 does not give the right statistic
+        # But simply taking the average of available entry logs does not give the right statistic either
+        logs_df = pd.DataFrame(data=user_logs_list, columns=('user', 'date', 'out'))
+        logs_df['date'] = pd.to_datetime(logs_df['date'])
+        logs_df = logs_df.set_index('date')
 
-#             custom_user = custom_user_form.save(commit='False')
-#             custom_user.user = user
-#             custom_user.save()
+        full_date_range = pd.date_range(logs_df.index.min(), logs_df.index.max(), freq='d')
 
-#             return HttpResponseRedirect('') # TODO
+        full_date_range_df = pd.DataFrame(full_date_range, columns=('date',))
+        full_date_range_df = full_date_range_df.set_index('date')
 
-#         print(f"Some form in invalid: custom_user_form:{custom_user_form.is_valid()} ")
-#     else:
-#         custom_user_form = SignUpForm()
+        joined_df = logs_df.join(full_date_range_df, how='outer')
+        joined_df = joined_df.fillna(0)
 
-#     return render(request, 'main/signup.html', {'custom_user_form': custom_user_form})
+        result = joined_df['out'].rolling('7d').mean()
+
+        return result.mean()
+
+    def get_hand_hygiene_mean(user):
+         # Problem: Rolling average over missing daily logs that a replaced with the value 0 does not give the right statistic
+        # But simply taking the average of available entry logs does not give the right statistic either
+        def get_sim_param_from_score(score):
+            switch = {
+                0: 0.5,
+                1: 1,
+                2: 1.5,
+                3: 2,
+            }
+            return switch[score]
+
+        user_logs = LogEntry.objects.filter(log_user=user)
+        hand_wash_frequency_avg = user_logs.annotate(
+            hand_hygiene=Case(
+                When(hand_wash_frequency=LogEntry.HandWashRanges.DIRTY, then=Value(0)),
+                When(hand_wash_frequency=LogEntry.HandWashRanges.LOW, then=Value(1)),
+                When(hand_wash_frequency=LogEntry.HandWashRanges.HIGH, then=Value(3)),
+                default=Value(2),
+                output_field=IntegerField
+            ),
+        ).AVG('hand_hygiene')
+
+        return get_sim_param_from_score(round(hand_wash_frequency_avg))
+
+    def get_leave_frequency(user):
+        user_logs = LogEntry.objects.filter(log_user=user)
+        
+        return user_logs.annotate(
+            has_left=Case(
+                When(leave='y', then=Value(1)),
+                default=Value(0),
+                output_field=IntegerField
+            ),
+        ).AVG('has_left')
+
+    # TODO: Define method to get back mean of hand wash after leave (only if leave was true)
+    # THOSE FUNCTiONS SHOULD PROBABLY BE ACCESSIBLE TO DAILIES TO UPDATE THE SCORE
+
+        
+
+
+        
+        
+
+
+

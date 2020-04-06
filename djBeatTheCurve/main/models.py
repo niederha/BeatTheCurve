@@ -67,15 +67,16 @@ class CustomUser(models.Model):
             Age: {self.age},
             Gender: {self.gender},
             Household size: {self.household_size},
-            Commorbidities: {self.commorbidities}
+            Commorbidities: {self.commorbidities},
+            Symptoms: {self.symptoms}
         ]
         """
 
 class GameInfo(models.Model):
-    user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
-    last_leave = models.DateTimeField('last household leave')
-    last_hand_wash = models.DateTimeField('last hand wash')
-    last_physical_activity = models.DateTimeField('last physical activity')
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    last_leave = models.DateTimeField('last household leave', default=None, blank=True, null=True)
+    last_hand_wash = models.DateTimeField('last hand wash', default=None, blank=True, null=True)
+    last_physical_activity = models.DateTimeField('last physical activity', default=None, blank=True, null=True)
     score = models.IntegerField(default=0)
 
     def __str__(self):
@@ -87,3 +88,46 @@ class GameInfo(models.Model):
             Score: {self.score}
         ]
         """
+
+class OutingReason(models.Model):
+
+    class OutingReasonChoice(models.TextChoices):
+        GROCERY = 'GROCERY_SHOPPING', _('Grocery shopping')
+        MEDICAL = 'MEDICAL', _('Medical reasons')
+        FRIENDS = 'FRIENDS', _('Meet friends')
+        DOG = 'DOG', _('Walk your dog (alone)')
+        EXERCISE = 'EXERCISE', _('Exercise (alone)')
+
+    name = models.CharField(
+        max_length=200,
+        choices=OutingReasonChoice.choices,
+        default=None,
+    )
+
+    def __str__(self):
+        return self.name
+
+class LogEntry(models.Model):
+
+    class HandWashRanges(models.TextChoices):
+        DIRTY = 'D', _('0 times')
+        LOW = 'L', _('Between 1 and 3 times') # -1
+        MIDDLE = 'M', _('Between 3 and 5 times') # 0
+        HIGH = 'H', _('6 times or more') # 1
+    
+
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='log_user')
+    date = models.DateTimeField('Entry date')
+    hand_wash_frequency = models.CharField(
+        max_length=1,
+        choices=HandWashRanges.choices,
+        default=HandWashRanges.MIDDLE,
+    )
+    leave = models.BooleanField(default='n', choices=[('n', 'No'), ('y', 'Yes')])
+    crowded_places = models.BooleanField(default='n', choices=[('n', 'No'), ('y', 'Yes')], blank=True, null=True)
+    hand_wash_after_leave = models.BooleanField(default='y', choices=[('n', 'No'), ('y', 'Yes')], blank=True, null=True)
+    reason = models.ManyToManyField(OutingReason, default=None, blank=True)
+
+
+
+    HandWashRanges.choices()
