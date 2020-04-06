@@ -15,6 +15,7 @@ function createDisplayCurveButtonHandler(buttonId, curveNum, color, isOnDisplay 
     }
     return displayCurveButtonHandler
 }
+
 function turnOnButton(bh){
     bh.button.classList.add(bh.buttonOnColor);
     bh.button.classList.remove(bh.textOffColor);

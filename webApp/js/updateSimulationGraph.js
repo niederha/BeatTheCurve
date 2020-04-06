@@ -54,7 +54,7 @@ function drawChart() {
         series: colorSerie,
         chartArea: {width: '92%', height: '91%'}
     };
-    console.log(options)
+
     var chart = new google.visualization.LineChart(document.getElementById('SimulationGraph'));
     chart.draw(view, options);
 }
