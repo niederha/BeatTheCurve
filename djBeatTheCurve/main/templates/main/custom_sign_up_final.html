@@ -27,7 +27,7 @@
    
     <div class="w3-main" style="margin-left:300px;margin-top:43px;"></div>
         <header class="w3-container w3-center" style="padding-top:22px">
-            <h3><b> <i class="fas fa-address-card"></i> Sign up</b></h3>
+            <h3><b> <i class="fas fa-address-card"></i>Your infos</b></h3>
         </header>
     <div class="w3-container w3-row"> 
 
@@ -37,6 +37,9 @@
         <div class="w3-half w3-card">
             <div class="w3-container w3-teal">
                 <h2>Custom informations</h2>
+                <p>
+                    As you are new here, we'd like to have a few informations about you in order to furnish personalised simulations
+                </p>
             </div>
             <form action="{% url 'customsignup' %}" method="post">
                 {% csrf_token %}
