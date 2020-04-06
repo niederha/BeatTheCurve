@@ -1,4 +1,5 @@
 import numpy as np
+import csv
 import matplotlib.pyplot as plt
 import sir_simul.sir_simul as s
 
@@ -56,7 +57,17 @@ def pie_id(De, R, N):
 
     plt.show()
 
-S, I, Recovered, De, Severe, beds, Country_ISO = s.main(0,"moderate", "normal", "yes", 3)
+S, I, Recovered, De, Severe, beds, Country_ISO = s.main(0,"none", "dirty", "no", 7, "CH")
+
+with open('worst_case.csv', 'w', newline='') as file:
+    writer = csv.writer(file, quoting=csv.QUOTE_ALL)
+    writer.writerow(["S", "I", "R", "D", "H", "beds", "ISO"])
+    for i in range(0,len(S)):
+        print(i)
+        writer.writerow([S[i], I[i], Recovered[i], De[i], Severe[i], beds, Country_ISO])
+    #writer.writerow([1, "Linus Torvalds", "Linux Kernel"])
+    #writer.writerow([2, "Tim Berners-Lee", "World Wide Web"])
+    #writer.writerow([3, "Guido van Rossum", "Python Programming"])
 
 
 #Saved_I, Saved_D = s.compute_saving(3, 3, 3, "DE")
