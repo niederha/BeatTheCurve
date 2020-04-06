@@ -1,5 +1,5 @@
 from django import forms
-from .models import CustomUser, Commorbidity, Symptom, LogEntry
+from .models import CustomUser, Commorbidity, Symptom, LogEntry, OutingReason
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from django.utils.translation import ugettext_lazy as _
@@ -25,6 +25,9 @@ class CustomSignUpForm(forms.ModelForm):
         widgets = {'gender': forms.RadioSelect, 'commorbidities': forms.CheckboxSelectMultiple, 'symptoms': forms.CheckboxSelectMultiple}
 
 class LogEntryForm(forms.ModelForm):
+    # TODO: This form should be updated to be able to only fill the required info
+    # as some field are filled coniditionnally based on the answer of others.
+    
     class Meta:
         model = LogEntry
         exclude = ['user', 'date']
