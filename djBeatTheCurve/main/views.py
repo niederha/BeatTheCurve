@@ -5,12 +5,18 @@ from django.http import HttpResponseRedirect
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth import authenticate, login
+from django.conf import settings
 
-from django.db import models
+from django.db.models import Case, When, Value, Window, F, Avg, Min, ValueRange, IntegerField
 from .models import CustomUser, GameInfo, LogEntry
 from .models import Symptom
 
+
 from .forms import CustomSignUpForm, EasyUserCreationForm, LogEntryForm
+
+from datetime import datetime
+
+import pandas as pd
 
 # Create your views here.
 def index(request):
@@ -91,8 +97,6 @@ def dashboard(request):
 
 
 def daily(request):
-    print ("HELLO FROM DAILY")
-
     if request.method == 'POST':
         form = LogEntryForm(request.POST)
 
@@ -100,6 +104,7 @@ def daily(request):
             print("LogEntry form is valid")
             log_entry = form.save(commit=False)
             log_entry.user = request.user # Set log entry to current user
+            log_entry.date = datetime.now(settings.TIME_ZONE)
             log_entry.save()
             form.save_m2m()
 
@@ -111,3 +116,19 @@ def daily(request):
     
     else:
         return render(request, 'main/daily.html', {'form': LogEntryForm()})
+
+
+def simulation(request):
+    def crowded_places_frequentation_mean(user):
+        user_logs = LogEntry.objects.filter(log_user=user)
+        min_log_date = user_logs.aggregate(Min('date'))
+        user_logs = user_logs.annotate(
+            crowded_outing=Case(
+                When(crowded_places='y', then=Value(1)),
+                default=Value(0),
+                output_field=IntegerField
+            ),
+        ).values_list('log_user', 'date', 'crowded_outing')
+        user_logs_list = list(user_logs)
+
+        # Ugly but will do as sqlite does not implement moving average and coding it in django is awful..
