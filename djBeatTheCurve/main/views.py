@@ -90,7 +90,7 @@ def dashboard(request):
     cuser = GameInfo.objects.get(user=request.user)
     top_cusers = GameInfo.objects.order_by('-score')
     top_size = min(top_cusers.count(), 4)
-    top_cusers = top_cusers[:4]
+    top_cusers = top_cusers[:top_size]
     #test_users = CustomUser.objects.filter(symptoms__name__in=[Symptom.SymptomType.COUGH, Symptom.SymptomType.FEVER])
     #print(test_users)
 
