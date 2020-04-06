@@ -3,30 +3,28 @@ function createDisplayCurveButtonHandler(buttonId, curveNum, color, isOnDisplay 
     var displayCurveButtonHandler = function(){};
     displayCurveButtonHandler.button = document.getElementById(buttonId);
     displayCurveButtonHandler.isOnDisplay = isOnDisplay;
-    displayCurveButtonHandler.textOncolor = "w3-text-white";
+    displayCurveButtonHandler.textOnColor = "w3-text-white";
     displayCurveButtonHandler.textOffColor = "w3-text-" + color;
     displayCurveButtonHandler.buttonOnColor = "w3-" + color;
     displayCurveButtonHandler.curveNum = curveNum;
 
     // Setup borders if needed
     var borderClassTag = "w3-border-" + color;
-    if (!displayCurveButtonHandler.button.classList.contains(borderClassTag)) {
+    if (displayCurveButtonHandler.button.classList.contains(borderClassTag)) {
         displayCurveButtonHandler.button.classList.add(borderClassTag);
     }
     return displayCurveButtonHandler
 }
 function turnOnButton(bh){
-    console.log("on");
     bh.button.classList.add(bh.buttonOnColor);
     bh.button.classList.remove(bh.textOffColor);
     bh.button.classList.add(bh.textOnColor);
     drawChart.displayMask[bh.curveNum] = true;
 }
 function turnOffButton(bh) {
-    console.log("off");
     bh.button.classList.remove(bh.buttonOnColor);
     bh.button.classList.remove(bh.textOnColor);
-    bh.button.classList.add(bh.textOnColor);
+    bh.button.classList.add(bh.textOffColor);
     drawChart.displayMask[bh.curveNum] = false;
 }
 function reverseButton(bh) {
