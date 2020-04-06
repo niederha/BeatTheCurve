@@ -8,6 +8,7 @@ let dataPippo = [];
 let dataPippoInt = [];
 let dataPippo1 = [];
 var pippoIndex = 0;
+///{"country_name":"UK","cases":"47,806","deaths":"4,934","region":"","total_recovered":"135","new_deaths":"621","new_cases":"5,903","serious_critical":"1,559","active_cases":"42,737","total_cases_per_1m_population":"704"},
 
 const pippoList = [
   ["total_cases_per_1m_population", "cases"],
@@ -35,13 +36,18 @@ function getPippoData() {
           el.country_name = "United States";
         else if (el.country_name == "UK")
           el.country_name = "United Kingdom";
+          else if (el.country_name == "Macedonia")
+            el.country_name = "North Macedonia";
+            else if (el.country_name == "Czechia")
+              el.country_name = "Czechia";
+              else if (el.country_name == "Congo")
+                el.country_name = "CD";
       }
       dataPippo = data.countries_stat;
       dataPippo.forEach((el, i) => {
         fixElemName(el);
         dataPippo[i] = [el["country_name"], el[pippoList[pippoIndex][0]], el[pippoList[pippoIndex][1]]];
       });
-      ///{"country_name":"UK","cases":"47,806","deaths":"4,934","region":"","total_recovered":"135","new_deaths":"621","new_cases":"5,903","serious_critical":"1,559","active_cases":"42,737","total_cases_per_1m_population":"704"},
     }))
     .then(() => {
       drawRegionsMap(["Country", ...pippoList[pippoIndex]]);
@@ -60,8 +66,9 @@ function drawRegionsMap(labels) {
   dataPippo.forEach((el, i1) => dataPippoInt[i1] = el.map((el1,i2) => filterData(el1, i2)));
   dataPippo1 = dataPippoInt.map(el => el[1]);
   maxVal = Math.max(...dataPippo1);
+
   if (pippoIndex == 0) maxVal = 3500;
-  else if (pippoIndex == 3) maxVal/=2;
+  if (pippoIndex == 3) maxVal = 38539;
 
   dataPippoInt.unshift(labels);
   var data = google.visualization.arrayToDataTable(
