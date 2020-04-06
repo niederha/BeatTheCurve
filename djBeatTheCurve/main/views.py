@@ -14,7 +14,7 @@ from .models import Symptom
 
 from .forms import CustomSignUpForm, EasyUserCreationForm, LogEntryForm
 
-from datetime import datetime
+from datetime import datetime, timedelta
 
 import pandas as pd
 
@@ -120,7 +120,6 @@ def daily(request):
 def simulation(request):
     def crowded_places_frequentation_mean(user):
         user_logs = LogEntry.objects.filter(log_user=user)
-        min_log_date = user_logs.aggregate(Min('date'))
         user_logs = user_logs.annotate(
             crowded_outing=Case(
                 When(crowded_places='y', then=Value(1)),
@@ -130,8 +129,22 @@ def simulation(request):
         ).values_list('log_user', 'date', 'crowded_outing')
         user_logs_list = list(user_logs)
 
-        # Ugly but will do as sqlite does not implement moving average and coding it in django is awful..
-        
+        # Ugly but will suffice as proof of concept as sqlite does not implement moving average and coding it in django is awful..
+        logs_df = pd.DataFrame(data=user_logs_list, columns=('user', 'date', 'out'))
+        logs_df['date'] = pd.to_datetime(logs_df['date'])
+        logs_df = logs_df.set_index('date')
+
+        full_date_range = pd.date_range(logs_df.index.min(), logs_df.index.max(), freq='d')
+
+        full_date_range_df = pd.DataFrame(full_date_range, columns=('date',))
+        full_date_range_df = full_date_range_df.set_index('date')
+
+        joined_df = logs_df.join(full_date_range_df, how='outer')
+        joined_df = joined_df.fillna(0)
+
+        result = joined_df['out'].rolling('7d').mean()
+
+        return result.mean()
         
 
 
