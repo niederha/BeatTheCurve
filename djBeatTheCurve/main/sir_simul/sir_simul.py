@@ -5,11 +5,11 @@ from   scipy.integrate import odeint
 import matplotlib
 import matplotlib.pyplot as plt
 import matplotlib.animation as animation
-import geonamescache
 import csv
 import requests
 import json
 import pycountry
+import geonamescache
 
 
 ###### Global Variables ######
@@ -330,38 +330,6 @@ def simulateUsersbehaviour(friends, central_loc, hands, sim_length, deriv, deriv
                curr_shop, dist,0, float('inf'), beds)
 
 
-
-####COMPUTE SAVINGS#####
-def compute_saving(friends=10, central_loc=3, hands=3, Country_ISO="CH", sim_length=300):
-    t= [0,1]
-    # compute how many people saved from death and infection
-
-    S, I, Recovered, De, Severe, beds, Country_ISO = main(friends, central_loc, hands, Country_ISO)
-
-    R = Recovered + De
-    # get country population
-    N = get_population(Country_ISO)
-
-    I0, R0, D0 = getIRD(Country_ISO)
-    S0 = N-I0-R0
-    y0 = S0, I0, R0, D0
-
-    S_nm, I_nm, R_nm, De_nm, Severe = sir_no_mesures(sim_length, deriv_basic, y0, t, N, beta, gamma, beds)
-    S, I, Recovered, De, Severe, beds, Country_ISO = main(friends, central_loc, hands, Country_ISO)
-    R = Recovered+De
-    # infections:
-    Tot_i = R[len(R) - 1]
-    Tot_i_nm = R_nm[len(R_nm) - 1]
-    Saved_i = Tot_i_nm - Tot_i
-    Saved_i = Saved_i / N
-
-    # deaths
-    Tot_d = De[len(De) - 1]
-    Tot_d_nm = De_nm[len(De_nm) - 1]
-    Saved_d = Tot_d_nm - Tot_d
-    Saved_d = Saved_d / N
-    return Saved_i, Saved_d
-
 ###MAIN#####
 
 #Input: 
@@ -395,6 +363,38 @@ def main(percent_dist, level_dist, hygiene, quarantine, days_shopping, Country_I
     Recovered = R-De
     
     return S, I, Recovered, De, Severe, beds, Country_ISO
+
+
+####COMPUTE SAVINGS#####
+# def compute_saving(friends=10, central_loc=3, hands=3, Country_ISO="CH", sim_length=300):
+#     t= [0,1]
+#     # compute how many people saved from death and infection
+
+#     S, I, Recovered, De, Severe, beds, Country_ISO = main(friends, central_loc, hands, Country_ISO)
+
+#     R = Recovered + De
+#     # get country population
+#     N = get_population(Country_ISO)
+
+#     I0, R0, D0 = getIRD(Country_ISO)
+#     S0 = N-I0-R0
+#     y0 = S0, I0, R0, D0
+
+#     S_nm, I_nm, R_nm, De_nm, Severe = sir_no_mesures(sim_length, deriv_basic, y0, t, N, beta, gamma, beds)
+#     S, I, Recovered, De, Severe, beds, Country_ISO = main(friends, central_loc, hands, Country_ISO)
+#     R = Recovered+De
+#     # infections:
+#     Tot_i = R[len(R) - 1]
+#     Tot_i_nm = R_nm[len(R_nm) - 1]
+#     Saved_i = Tot_i_nm - Tot_i
+#     Saved_i = Saved_i / N
+
+#     # deaths
+#     Tot_d = De[len(De) - 1]
+#     Tot_d_nm = De_nm[len(De_nm) - 1]
+#     Saved_d = Tot_d_nm - Tot_d
+#     Saved_d = Saved_d / N
+#     return Saved_i, Saved_d
 
 
 

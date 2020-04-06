@@ -1,7 +1,7 @@
 from django.shortcuts import HttpResponse
 from django.shortcuts import render
 from django.http import QueryDict
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, JsonResponse
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth import authenticate, login
@@ -18,6 +18,7 @@ from datetime import datetime, timedelta
 from dateutil import tz
 
 import pandas as pd
+from main.sir_simul import sir_simul as sim
 
 # Create your views here.
 def index(request):
@@ -145,6 +146,44 @@ def daily(request):
 
 
 def simulation(request):
+    # TODO: This code is so ugly. Refactor both client and simulation expected input/output + naming...
+    default_params = {
+        'country':'CH',
+        'fracFollowSD':0,
+        'lvlSD':'none',
+        'hygiene':'dirty',
+        'isolationOfInfected':'no',
+        'goOutFrq':7
+    }
+
+    params = default_params
+    if request.method == 'GET':
+        params = request.GET.dict()
+
+    S, I, Recovered, De, Severe, beds, Country_ISO = sim.main(
+        percent_dist=params['fracFollowSD'], 
+        level_dist=params['lvlSD'], 
+        hygiene=params['hygiene'], 
+        quarantine=params['isolationOfInfected'], 
+        days_shopping=params['goOutFrq'], 
+        Country_ISO=['country']
+    )
+
+    response_dict = {
+        "S": S,
+        "I": I,
+        "Recovered": Recovered,
+        "De": De,
+        "Severe": Severe,
+        "Beds": beds,
+        "Country_ISO": Country_ISO
+    }
+    
+    return JsonResponse(response_dict)
+    
+        
+
+
     def crowded_places_frequentation_mean(user):
         user_logs = LogEntry.objects.filter(log_user=user)
         user_logs = user_logs.annotate(
