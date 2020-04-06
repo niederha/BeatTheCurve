@@ -6,7 +6,7 @@ function sendSimulationData(){
             fracFollowSD: 0,
             lvlSD: 'none',
             hygiene: 'dirty',
-            isolationOfInfected: false,
+            isolationOfInfected: 'no',
             goOutFrq: 7
         }
     }

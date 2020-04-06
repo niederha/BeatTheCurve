@@ -96,67 +96,10 @@
             </div>
         </div>
 
-        <!-- Graph and boxes-->
-        <div class="w3-container w3-margin-bottom"></div>
-        <div class="w3-row w3-margin-left w3-margin-bottom">
-            <div class="w3-container w3-twothird">
-                <h4><h4><i class="fas fa-arrows-alt w3-xlarge"> </i> How would it spread?</h4>
-                <div id="SimulationGraph" class="w3-margin-left w3-margin-right" stlye="height:100%"></div>
-            </div>
-            <div class="w3-container w3-third">
-                <h4>Choose what to show: </h4>
-                <button id="buttonSuceptible" class="w3-container w3-block w3-display-container w3-button w3-teal w3-border w3-border-teal w3-text-white">
-                    <div class="w3-right"><i class="far fa-smile w3-xxlarge w3-display-right w3-margin-right"></i>
-                    </div>
-                    <div class="w3-left">
-                        <h3 id="sim_nbSuceptible">No data</h3>
-                    </div>
-                </button>
-                <div class="w3-container w3-margin-bottom"></div>
-                <button id="buttonSick" class="w3-container w3-block w3-display-container w3-button w3-deep-orange w3-border w3-border-deep-orange w3-text-white">
-                    <div class="w3-right"><i class="far fa-sad-tear w3-xxlarge w3-display-right w3-margin-right"></i></div>
-                    <div class="w3-left">
-                        <h3 id="sim_nbSick">No data</h3>
-                    </div>
-                </button>
-                <div class="w3-container w3-margin-bottom"></div>
-                <button id="buttonDead" class="w3-container w3-block w3-display-container w3-button w3-blue-gray w3-border w3-border-blue-gray w3-text-white">
-                    <div class="w3-right"><i class="fas fa-dizzy w3-xxlarge w3-display-right w3-margin-right"></i>
-                    </div>
-                    <div class="w3-left">
-                        <h3 id="sim_nbDead">No data</h3>
-                    </div>
-                </button>
-                <div class="w3-container w3-margin-bottom"></div>
-                <button id="buttonRecovered" class="w3-container w3-block w3-display-container w3-button w3-green w3-border w3-border-green w3-text-white">
-                    <div class="w3-right "><i class="fas fa-users w3-xxlarge w3-display-right w3-margin-right"></i></div>
-                    <div class="w3-left">
-                        <h3 id="sim_nbImmune">No data</h3>
-                    </div>
-                </button>
-                <div class="w3-container w3-margin-bottom"></div>
-                <button id="buttonAcuteSymptoms" class="w3-container w3-block w3-display-container w3-button w3-dark-gray w3-border w3-border-dark-gray w3-text-white">
-                    <div class="w3-right "><i class="fas fa-procedures w3-xxlarge w3-display-right w3-margin-right"></i></div>
-                    <div class="w3-left">
-                        <h3 id="sim_nbAcuteSyptoms">No data</h3>
-                    </div>
-                </button>
-                <div class="w3-container w3-margin-bottom"></div>
-                <button id="buttonHospitalCapacity"
-                    class="w3-container w3-block w3-display-container w3-button w3-black w3-border w3-border-black w3-text-white">
-                    <div class="w3-right "><i class="fas fa-hospital w3-xxlarge w3-display-right w3-margin-right"></i></div>
-                    <div class="w3-left">
-                        <h3 id="sim_hospitalCapacity">No data</h3>
-                    </div>
-                </button>
-            </div>
-            
-        </div>
-
         <!-- Parameters container -->
         <div class="w3-container  w3-margin-bottom"></div>
-        <div class="w3-container w3-margin w3-border-top w3-border-bottom w3-border-blue-grey"> 
-            <h4><i class="fas fa-cogs w3-xlarge"> </i> Tweak the parameters</h4>
+        <div class="w3-container w3-margin w3-border-top w3-border-bottom w3-border-blue-grey">
+            <h4><i class="fas fa-cogs w3-xlarge"> </i> Tweak parameters</h4>
             <div class="w3-pannel w3-margin">
                 <h5>See what would happen in
                     <select id="countrySelector">
@@ -412,7 +355,7 @@
                     </select>
                     if people behaved as follow:
                 </h5>
-            
+        
                 <div class="w3-row-padding">
                     <div class="w3-third">
                         <p>Social distancing strength:</p>
@@ -441,12 +384,14 @@
                             <span class="checkmark"></span>
                         </label>
                     </div>
+        
                     <div class="w3-third">
                         <p id="textSD">Fraction of people following social distancing: 0 %</p>
                         <div class="slidecontainer">
                             <input type="range" min="0" max="100" value="0" class="slider" id="sliderSD">
                         </div>
                     </div>
+        
                     <div class="w3-third">
                         <p>Are we isolating infected people?</p>
                         <label class="container"> No
@@ -454,11 +399,11 @@
                             <span class="checkmark"></span>
                         </label>
                         <label class="container"> Yes
-                            <input type="radio" name="radioIso" checked="checked">
+                            <input type="radio" name="radioIso">
                             <span class="checkmark"></span>
                         </label>
                     </div>
-
+        
                     <div class="w3-third">
                         <p>Hygiene</p>
                         <label class="container"> Poor
@@ -478,8 +423,7 @@
                             <span class="checkmark"></span>
                         </label>
                     </div>
-
-
+        
                     <div class="w3-third">
                         <p id="textGOF">Number of time per week people go to crowded places on average (e.g: supermarket): 7</p>
                         <div class="slidecontainer">
@@ -493,8 +437,64 @@
             </div>
         </div>
 
-        
-        
+        <!-- Graph and boxes-->
+        <div class="w3-container w3-margin-bottom"></div>
+        <div class="w3-row w3-margin-left w3-margin-bottom">
+            <div class="w3-container w3-twothird">
+                <h4><h4><i class="fas fa-arrows-alt w3-xlarge"> </i> How would it spread th next 300 days in your country?</h4>
+                <p>Change parameters to see their impact</p>
+                <div id="SimulationGraph" class="w3-margin-left w3-margin-right" stlye="height:100%"></div>
+            </div>
+            <div class="w3-container w3-third">
+                <h4>After 300 days:</h4>
+                <p>(Click to hide/show)</p>
+                <button id="buttonSuceptible" class="w3-container w3-block w3-display-container w3-button w3-teal w3-border w3-border-teal w3-text-white">
+                    <div class="w3-right"><i class="far fa-smile w3-xxlarge w3-display-right w3-margin-right"></i>
+                    </div>
+                    <div class="w3-left">
+                        <h3 id="sim_nbSuceptible">No data</h3>
+                    </div>
+                </button>
+                <div class="w3-container w3-margin-bottom"></div>
+                <button id="buttonSick" class="w3-container w3-block w3-display-container w3-button w3-deep-orange w3-border w3-border-deep-orange w3-text-white">
+                    <div class="w3-right"><i class="far fa-sad-tear w3-xxlarge w3-display-right w3-margin-right"></i></div>
+                    <div class="w3-left">
+                        <h3 id="sim_nbSick">No data</h3>
+                    </div>
+                </button>
+                <div class="w3-container w3-margin-bottom"></div>
+                <button id="buttonDead" class="w3-container w3-block w3-display-container w3-button w3-blue-gray w3-border w3-border-blue-gray w3-text-white">
+                    <div class="w3-right"><i class="fas fa-dizzy w3-xxlarge w3-display-right w3-margin-right"></i>
+                    </div>
+                    <div class="w3-left">
+                        <h3 id="sim_nbDead">No data</h3>
+                    </div>
+                </button>
+                <div class="w3-container w3-margin-bottom"></div>
+                <button id="buttonRecovered" class="w3-container w3-block w3-display-container w3-button w3-green w3-border w3-border-green w3-text-white">
+                    <div class="w3-right "><i class="fas fa-users w3-xxlarge w3-display-right w3-margin-right"></i></div>
+                    <div class="w3-left">
+                        <h3 id="sim_nbImmune">No data</h3>
+                    </div>
+                </button>
+                <div class="w3-container w3-margin-bottom"></div>
+                <button id="buttonAcuteSymptoms" class="w3-container w3-block w3-display-container w3-button w3-dark-gray w3-border w3-border-dark-gray w3-text-white">
+                    <div class="w3-right "><i class="fas fa-procedures w3-xxlarge w3-display-right w3-margin-right"></i></div>
+                    <div class="w3-left">
+                        <h3 id="sim_nbAcuteSyptoms">No data</h3>
+                    </div>
+                </button>
+                <div class="w3-container w3-margin-bottom"></div>
+                <button id="buttonHospitalCapacity"
+                    class="w3-container w3-block w3-display-container w3-button w3-black w3-border w3-border-black w3-text-white">
+                    <div class="w3-right "><i class="fas fa-hospital w3-xxlarge w3-display-right w3-margin-right"></i></div>
+                    <div class="w3-left">
+                        <h3 id="sim_hospitalCapacity">No data</h3>
+                    </div>
+                </button>
+            </div>
+            
+        </div>
     </div>
 
     <footer class="w3-container w3-padding-16 w3-light-grey">
