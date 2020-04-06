@@ -47,12 +47,12 @@ function drawChart() {
         title: '',
         curveType: 'function',
         backgroundColor: { fill: "transparent" },
-        legend: { position: 'bottom' },
-        hAxis: { baseline: 0, title: "Number of days", viewWindow: {min: 0}},
-        vAxis: { baseline: 0, title: "Number of people", viewWindow: {min: 0, max: 2000}},
+        hAxis: { baseline: 0, title: "Number of days", viewWindow: {min: 0}, textPosition: 'in'},
+        vAxis: { baseline: 0, title: "Number of people", viewWindow: { min: -250, max: 2000 }, textPosition: 'in'},
         legend: { position: "none"},
         height: 500,
-        series: colorSerie
+        series: colorSerie,
+        chartArea: {width: '92%', height: '91%'}
     };
     console.log(options)
     var chart = new google.visualization.LineChart(document.getElementById('SimulationGraph'));
