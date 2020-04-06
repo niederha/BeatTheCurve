@@ -17,6 +17,7 @@ function sendSimulationData(){
 function initialiseParamView(){
     countrySelector.value = sendSimulationData.simulationData.country;
     sliderSD.value = sendSimulationData.simulationData.fracFollowSD;
+    sliderGOF.value = sendSimulationData.simulationData.goOutFrq;
 }
 
 function sliderSDCB(){
@@ -45,7 +46,7 @@ sliderSD.oninput = sliderSDCB;
 // GOF slider
 var sliderGOF = document.getElementById("sliderGOF");
 var textGOF = document.getElementById("textGOF");
-sliderSD.oninput = sliderGOFCB;
+sliderGOF.oninput = sliderGOFCB;
 
 
 var buttonSimulate = document.getElementById("buttonSimulate");
