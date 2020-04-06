@@ -1,4 +1,5 @@
 /*jshint esversion: 6 */
+
 // Update figures
 //
 
@@ -12,7 +13,7 @@ function divAddData(idElem, data1, data2){
   div1.appendChild(paragraph);
   let div2 = document.createElement('div');
   if (data2){
-    div2.classList.add("w3-container","w3-third","w3-margin", "w3-middle");
+    div2.classList.add("w3-container","w3-third","w3-margin", "w3-middle", "w3-right");
     let paragraph2 = document.createElement('h7');
     paragraph2.textContent = 'new: ' + data2;
     div2.appendChild(paragraph2);
@@ -30,10 +31,11 @@ fetch("https://coronavirus-monitor.p.rapidapi.com/coronavirus/worldstat.php", {
 	}
 })
 .then(response => response.json().then(data => {
-  divAddData("nbSuceptible", "5,424,242");
   divAddData("nbSick", data.total_cases, data.new_cases);
   divAddData("nbDead", data.total_deaths, data.new_deaths);
   divAddData("nbImmune", data.total_recovered);
+  const suceb = parseInt("7346235000") - parseInt(data.total_cases.replace(",", "")) - parseInt(data.total_deaths.replace(",", "")) - parseInt(data.total_recovered.replace(",", ""));
+  divAddData("nbSuceptible", suceb);
 }))
 .catch(err => {
     console.log(err);
