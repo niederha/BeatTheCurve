@@ -19,12 +19,15 @@
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
     <link rel="stylesheet" href="css/customSliders.css">
+    <link rel="stylesheet" href="css/customRadiobutton.css">
     <style>
         html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
         .half-height{
             height: 50%;
         }
     </style>
+
+
 </head>
 
 <body class="w3-light-grey">
@@ -410,27 +413,72 @@
                     if people behaved as follow:
                 </h5>
             
-                <div class=w3-row-padding>
-                    <div class="w3-half">
+                <div class="w3-row-padding">
+                    <div class="w3-third">
                         <p>Social distancing strength:</p>
-                        <p>yeet yeet yeet yeet yeet yeet</p>
+                        <label class="container"> None
+                            <input type="radio" name="radioSDS" checked="checked">
+                            <span class="checkmark"></span>
+                        </label>
+                        <label class="container"> Low
+                            <input type="radio" name="radioSDS">
+                            <span class="checkmark"></span>
+                        </label>
+                        <label class="container"> Moderate
+                            <input type="radio" name="radioSDS">
+                            <span class="checkmark"></span>
+                        </label>
+                        <label class="container"> High
+                            <input type="radio" name="radioSDS">
+                            <span class="checkmark"></span>
+                        </label>
+                        <label class="container"> Very high
+                            <input type="radio" name="radioSDS">
+                            <span class="checkmark"></span>
+                        </label>
+                        <label class="container"> Total isolation
+                            <input type="radio" name="radioSDS">
+                            <span class="checkmark"></span>
+                        </label>
                     </div>
-                    <div class="w3-half">
-                        <p id="textSD">Fraction of pepople following social distancing: 0 %</p>
+                    <div class="w3-third">
+                        <p id="textSD">Fraction of people following social distancing: 0 %</p>
                         <div class="slidecontainer">
                             <input type="range" min="0" max="100" value="0" class="slider" id="sliderSD">
                         </div>
                     </div>
-
                     <div class="w3-third">
-                        <p>Hygiene</p>
-                        <p>Yeet Yeet Yeet Yeet Yeet Yeet Yeet</p>
+                        <p>Are we isolating infected people?</p>
+                        <label class="container"> No
+                            <input type="radio" name="radioIso" checked="checked">
+                            <span class="checkmark"></span>
+                        </label>
+                        <label class="container"> Yes
+                            <input type="radio" name="radioIso" checked="checked">
+                            <span class="checkmark"></span>
+                        </label>
                     </div>
 
                     <div class="w3-third">
                         <p>Hygiene</p>
-                        <p>Yes No</p>
+                        <label class="container"> Poor
+                            <input type="radio" name="radioH" checked="checked">
+                            <span class="checkmark"></span>
+                        </label>
+                        <label class="container"> Average
+                            <input type="radio" name="radioH">
+                            <span class="checkmark"></span>
+                        </label>
+                        <label class="container"> Above average
+                            <input type="radio" name="radioH">
+                            <span class="checkmark"></span>
+                        </label>
+                        <label class="container"> Borderline OCD
+                            <input type="radio" name="radioH">
+                            <span class="checkmark"></span>
+                        </label>
                     </div>
+
 
                     <div class="w3-third">
                         <p id="textGOF">Number of time per week people go to crowded places on average (e.g: supermarket): 7</p>
