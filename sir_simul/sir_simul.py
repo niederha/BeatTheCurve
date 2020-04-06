@@ -270,44 +270,45 @@ def main(friends=10, central_loc=3, hands=3, Country_ISO="CH", sim_length=300):
     
     #get country infected, dead, recovered (real time):
     url = "https://coronavirus-monitor.p.rapidapi.com/coronavirus/cases_by_country.php"
-	headers = {
+    headers = {
 		'x-rapidapi-host': "coronavirus-monitor.p.rapidapi.com",
 		'x-rapidapi-key': "815636d2f5msh5b6f6b41061625ep10f46fjsn4221a8a8f565"
 		}
-	response = requests.request("GET", url, headers=headers)
-	a = json.loads(response.text)
-	stat = (a['countries_stat'])
+    response = requests.request("GET", url, headers=headers)
+    a = json.loads(response.text)
+    stat = (a['countries_stat'])
 
-	country = pycountry.countries.get(alpha_2=Country_ISO)
-	#protect from crashing in case ISO code not found
-	if country == None:
-		country_name = "not found"
-	else:
-		country_name = country.name
+    country = pycountry.countries.get(alpha_2=Country_ISO)
+    #protect from crashing in case ISO code not found
+    if country == None:
+        country_name = "not found"
+    else:
+        country_name = country.name
 	
-	#corrected names manually
-	if country_name == "United Kingdom":
-		country_name = "UK"
-	elif country_name == "United States":
-		country_name = "USA"
+    #corrected names manually
+    if country_name == "United Kingdom":
+        country_name = "UK"
+    elif country_name == "United States":
+        country_name = "USA"
 
-	for i in stat:
-		if i['country_name'] == country_name:
-			I0 = i['cases']
-			R0 = i['total_recovered']
-			D0 = i['deaths']
-			
-			#convert to float
+    for i in stat:
+        if i['country_name'] == country_name:
+            I0 = i['cases']
+            R0 = i['total_recovered']
+            D0 = i['deaths']
+
+            #convert to float
             I0 = float(I0.replace(",",""))
             R0 = float(R0.replace(",",""))
             D0 = float(D0.replace(",",""))
+            break
             
 			
-	#fallback in case country_names don't match
-	if I0 == 0:
-		I0 = 70000
-		R0 = 0
-		D0 = 0
+    #fallback in case country_names don't match
+    if I0 == 0:
+        I0 = 70000
+        R0 = 0
+        D0 = 0
 
 	#print(I0)
 	#print(R0)
@@ -326,19 +327,16 @@ def main(friends=10, central_loc=3, hands=3, Country_ISO="CH", sim_length=300):
     Severe   = np.zeros(sim_length)
  
     #get nb beds
-    file = 'hosp_beds.csv'
+    file = 'sir_simul/hosp_beds.csv'
     with open(file) as fh:
         rd = csv.DictReader(fh, delimiter=',')
         for row in rd:
             beds = row[Country_ISO]
     beds = float(beds)*0.5 #half of the beds available for epidemics
+    beds = beds/1000*N  #total nb of beds in country
     
     S, I, R, De, Severe = simulateUsersbehaviour(friends, central_loc, hands, sim_length, deriv, deriv_basic, y0, t, N, beds)
     Recovered = R-De
-    
-    #plot_sir(S, I, R, np.linspace(0, 300, 300))
-    #pie_id(De, R, N)
-    #plot_letality(Severe, De, np.linspace(0, 300, 300), beds)
     
     return S, I, Recovered, De, Severe, beds, Country_ISO
 
