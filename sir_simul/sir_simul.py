@@ -20,10 +20,10 @@ beta, gamma = 2.4/11, 1./11 #multiplied by 36
 m = 3./100
 
 #Quarantine: isolation of symptomatic people
-Quarantine = {"no":0, "yes":0.75} #yes: percentage of sick people showing symptoms
+Quarantine = {"no":0, "yes":0.5} #yes: percentage of sick people showing symptoms
 
 #Hygiene level
-Hygiene = {"dirty":0.5, "normal":1.0, "medium":1.5, "high":2.0} 
+Hygiene = {"dirty":0.5, "normal":1.0, "above average":1.5, "high":2.0}
 
 #Supermarket frequency
 shopping_freq = {"very low":1, "low": 2,"normal":3,"high":5,"very high":6,"everyday":7} #number of days you go shopping/week
@@ -244,6 +244,41 @@ def getIRD(Country_ISO):
 
 
 ###### Users parameters function#####
+def simulation(percent_dist, level_dist, hygiene, quarantine, days_shopping, y0, t, N, beds, sim_length=300):
+    #simulates the SIRD model with parameters defined by the user
+
+    #percentage of people distancing
+    if 100 < percent_dist <= 99:
+        ratio_dist = "100%"
+    elif 99 < percent_dist <= 85:
+        ratio_dist = "90%"
+    elif 85 < percent_dist <= 65:
+        ratio_dist = "75%"
+    elif 65 < percent_dist <= 35:
+        ratio_dist = "50%"
+    elif 35 < percent_dist <= 15:
+        ratio_dist = "25%"
+    else:
+        ratio_dist = "0%"
+    distancing = [ratio_dist,level_dist]
+
+    #getting shopping frequency from number of days shopping
+    if days_shopping == 1:
+        shop = "very low"
+    elif days_shopping == 2:
+        shop = "low"
+    elif 3 <= days_shopping <= 4 :
+        shop = "normal"
+    elif days_shopping == 5:
+        shop = "high"
+    elif days_shopping == 6:
+        shop = "very high"
+    else:
+        shop = "everyday"
+
+    return sir(sim_length, deriv, deriv_basic, y0, t, N, beta, gamma, 0, quarantine, hygiene, 0, shop, distancing, 0, float('inf'), beds)
+
+
 
 def simulateUsersbehaviour(friends, central_loc, hands, sim_length, deriv, deriv_basic, y0, t, N, beds):
     #simulates what would happen if everyone had the same behaviour as the user
@@ -273,7 +308,7 @@ def simulateUsersbehaviour(friends, central_loc, hands, sim_length, deriv, deriv
     elif 3 <= hands < 5:
         curr_hygiene = "normal"
     elif 5 <= hands < 10:
-        curr_hygiene = "medium"
+        curr_hygiene = "above average"
     else:
         curr_hygiene = "high"
     
@@ -330,16 +365,17 @@ def compute_saving(friends=10, central_loc=3, hands=3, Country_ISO="CH", sim_len
 ###MAIN#####
 
 #Input: 
-#friends: number of friends in contact with during a day
-#central_loc: nb of days per week you go to supermarket
-#hands: nb of time per day you wash your hands
+#percent_dist: 0, 25, 50, 75, 90, 100
+#level_dist: isolation, very high, high, moderate, low, none
+#hygiene: dirty, normal, above average, high
+#quarantine: no, yes
+#days_shopping: 1, 2,3,4,5,6,7
 #Country_ISO
 #simulation length (OPTIONAL)
 
  
-def main(friends=10, central_loc=3, hands=3, Country_ISO="CH", sim_length=300):
+def main(percent_dist, level_dist, hygiene, quarantine, days_shopping, Country_ISO="CH", sim_length=300):
     t=[0,1]
-
     #get country population
     N = get_population(Country_ISO)
     
@@ -353,13 +389,12 @@ def main(friends=10, central_loc=3, hands=3, Country_ISO="CH", sim_length=300):
     #get nb beds
     beds = get_beds(Country_ISO)
 
-    S, I, R, De, Severe = simulateUsersbehaviour(friends, central_loc, hands, sim_length, deriv, deriv_basic, y0, t, N, beds)
+    S, I, R, De, Severe = simulation(percent_dist, level_dist, hygiene, quarantine, days_shopping, y0, t, N, beds)
+
+
     Recovered = R-De
     
     return S, I, Recovered, De, Severe, beds, Country_ISO
-
-#S, I, Recovered, De, Severe, beds, Country_ISO =  main(friends, central_loc, hands, Country_ISO)
-
 
 
 
