@@ -40,15 +40,17 @@
             </div>
             <div class="w3-bar-block">
               <a href="#" class="w3-bar-item w3-button w3-padding-16 w3-hide-large w3-dark-grey w3-hover-black" onclick="w3_close()" title="close menu"><i class="fa fa-remove fa-fw"></i>&nbsp; Close Menu</a>
-              <a href="#" class="w3-bar-item w3-button w3-padding w3-pale-blue"><i class="fa fa-users fa-fw"></i>&nbsp; Overview</a>
-              <a href="#" class="w3-bar-item w3-button w3-padding"><i class="fa fa-eye fa-fw"></i>&nbsp; Country extrapolation</a>
-              <a href="#" class="w3-bar-item w3-button w3-padding"><i class="fa fa-globe-americas fa-fw"></i>&nbsp; Current situation</a>
-              <a href="#" class="w3-bar-item w3-button w3-padding"><i class="fa fa-chart-bar fa-fw"></i>&nbsp; Simulation</a>
+              <a href="{% url 'dashboard' %}" class=""><i class="fa fa-users fa-fw"></i>&nbsp; Overview</a>
+              <a href="{% url 'daily' %}" class="w3-bar-item w3-button w3-padding w3-pale-yellow"><i class="fa fa-exclamation fa-fw"></i>&nbsp; My actions</a>
+              <a href="{% url 'current_situation' %}" class="w3-bar-item w3-button w3-padding"><i class="fa fa-globe-americas fa-fw"></i>&nbsp; Current situation</a>
+              <a href="{% url 'simulation' %}" class="w3-bar-item w3-button w3-padding"><i class="fa fa-chart-bar fa-fw"></i>&nbsp; Simulations</a>
+              <a href="{% url 'customsignup' %}" class="w3-bar-item w3-button w3-padding"><i class="fa fa-cog fa-fw"></i>&nbsp; User Settings</a><br><br>
+<!--          <a href="#" class="w3-bar-item w3-button w3-padding"><i class="fa fa-eye fa-fw"></i>&nbsp; Country extrapolation</a>
               <a href="#" class="w3-bar-item w3-button w3-padding w3-pale-yellow"><i class="fa fa-exclamation fa-fw"></i>&nbsp; My actions</a>
               <a href="#" class="w3-bar-item w3-button w3-padding"><i class="fa fa-bell fa-fw"></i>&nbsp; News</a>
               <a href="#" class="w3-bar-item w3-button w3-padding"><i class="fa fa-bank fa-fw"></i>&nbsp; General</a>
-              <a href="#" class="w3-bar-item w3-button w3-padding"><i class="fa fa-history fa-fw"></i>&nbsp; History</a>
-              <a href="#" class="w3-bar-item w3-button w3-padding"><i class="fa fa-cog fa-fw"></i>&nbsp; Settings</a><br><br>
+              <a href="#" class="w3-bar-item w3-button w3-padding"><i class="fa fa-history fa-fw"></i>&nbsp; History</a> -->
+             
             </div>
         </nav>
         

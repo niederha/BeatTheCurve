@@ -186,6 +186,15 @@ def simulation(request):
             ),
         ).AVG('has_left')
 
+def quiz(request):
+    print("HELLO FROM QUIZ")
+
+    return render(request, 'main/quiz.html', {})
+
+def situation(request):
+    print("HELLO FROM CURRENT SITUATION PAGE")
+
+    return render(request, 'main/situation.html', {})
     # TODO: Define method to get back mean of hand wash after leave (only if leave was true)
     # THOSE FUNCTiONS SHOULD PROBABLY BE ACCESSIBLE TO DAILIES TO UPDATE THE SCORE
 

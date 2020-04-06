@@ -127,7 +127,3 @@ class LogEntry(models.Model):
     crowded_places = models.BooleanField(default='n', choices=[('n', 'No'), ('y', 'Yes')], blank=True, null=True)
     hand_wash_after_leave = models.BooleanField(default='y', choices=[('n', 'No'), ('y', 'Yes')], blank=True, null=True)
     reason = models.ManyToManyField(OutingReason, default=None, blank=True)
-
-
-
-    HandWashRanges.choices()
