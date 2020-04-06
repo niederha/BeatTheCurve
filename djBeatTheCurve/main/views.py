@@ -131,6 +131,9 @@ def simulation(request):
         user_logs_list = list(user_logs)
 
         # Ugly but will suffice as proof of concept as sqlite does not implement moving average and coding it in django is awful..
+        
+        # Problem: Rolling average over missing daily logs that a replaced with the value 0 does not give the right statistic
+        # But simply taking the average of available entry logs does not give the right statistic either
         logs_df = pd.DataFrame(data=user_logs_list, columns=('user', 'date', 'out'))
         logs_df['date'] = pd.to_datetime(logs_df['date'])
         logs_df = logs_df.set_index('date')
@@ -146,6 +149,50 @@ def simulation(request):
         result = joined_df['out'].rolling('7d').mean()
 
         return result.mean()
+
+    def get_hand_hygiene_mean(user):
+         # Problem: Rolling average over missing daily logs that a replaced with the value 0 does not give the right statistic
+        # But simply taking the average of available entry logs does not give the right statistic either
+        def get_sim_param_from_score(score):
+            switch = {
+                0: 0.5,
+                1: 1,
+                2: 1.5,
+                3: 2,
+            }
+            return switch[score]
+
+        user_logs = LogEntry.objects.filter(log_user=user)
+        hand_wash_frequency_avg = user_logs.annotate(
+            hand_hygiene=Case(
+                When(hand_wash_frequency=LogEntry.HandWashRanges.DIRTY, then=Value(0)),
+                When(hand_wash_frequency=LogEntry.HandWashRanges.LOW, then=Value(1)),
+                When(hand_wash_frequency=LogEntry.HandWashRanges.HIGH, then=Value(3)),
+                default=Value(2),
+                output_field=IntegerField
+            ),
+        ).AVG('hand_hygiene')
+
+        return get_sim_param_from_score(round(hand_wash_frequency_avg))
+
+    def get_leave_frequency(user):
+        user_logs = LogEntry.objects.filter(log_user=user)
+        
+        return user_logs.annotate(
+            has_left=Case(
+                When(leave='y', then=Value(1)),
+                default=Value(0),
+                output_field=IntegerField
+            ),
+        ).AVG('has_left')
+
+    # TODO: Define method to get back mean of hand wash after leave (only if leave was true)
+    # THOSE FUNCTiONS SHOULD PROBABLY BE ACCESSIBLE TO DAILIES TO UPDATE THE SCORE
+
+        
+
+
+        
         
 
 

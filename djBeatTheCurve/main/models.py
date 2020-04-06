@@ -110,9 +110,10 @@ class OutingReason(models.Model):
 class LogEntry(models.Model):
 
     class HandWashRanges(models.TextChoices):
-        LOW = 'L', _('Less than 3 times')
-        MIDDLE = 'M', _('More than 3 times, but less than 6')
-        HIGH = 'H', _('6 times or more')
+        DIRTY = 'D', _('0 times')
+        LOW = 'L', _('Between 1 and 3 times') # -1
+        MIDDLE = 'M', _('Between 3 and 5 times') # 0
+        HIGH = 'H', _('6 times or more') # 1
     
 
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='log_user')
@@ -129,3 +130,4 @@ class LogEntry(models.Model):
 
 
 
+    HandWashRanges.choices()
