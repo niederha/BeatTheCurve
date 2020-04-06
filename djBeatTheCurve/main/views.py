@@ -111,10 +111,11 @@ def daily(request):
             print("Successfully save log entry, redirecting to dashboard")
             return HttpResponseRedirect('dashboard')
         else:
+            print("LogEntry form is NOT valid")
             return HttpResponseRedirect('daily')
     
     else:
-        return render(request, 'main/daily_test.html', {'form': LogEntryForm()})
+        return render(request, 'main/daily.html', {'form': LogEntryForm()})
 
 
 def simulation(request):
