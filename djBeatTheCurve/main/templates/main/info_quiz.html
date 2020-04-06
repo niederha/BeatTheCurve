@@ -1,4 +1,10 @@
+<!DOCTYPE html>
+
+{% load static %}
+
 <html>
+
+
     <head>
         <meta charset="UTF-8">
         <title>Beat the Curve - Info-Quiz </title>
@@ -21,62 +27,110 @@
             <button class="w3-bar-item w3-button w3-hide-large w3-hover-none w3-hover-text-light-grey" onclick="w3_open();"><i class="fa fa-bars"></i> &nbsp;Menu</button>
             <span class="w3-bar-item w3-right">Beat The Curve</span>
         </div>
+       
+        <nav class="w3-sidebar w3-collapse w3-white w3-animate-left" style="z-index:3;width:200px;" id="mySidebar"><br>
+            <div class="w3-container w3-row">
+              <div class="w3-col s4">
+              </div>
+              <div class="w3-col s8 w3-bar">
+                <span>Welcome, <strong>{{ user.username }}</strong></span><br>
+                <a href="#" class="w3-bar-item w3-button"><i class="fa fa-envelope"></i></a>
+                <a href="#" class="w3-bar-item w3-button"><i class="fa fa-user"></i></a>
+                <a href="#" class="w3-bar-item w3-button"><i class="fa fa-cog"></i></a>
+              </div>
+            </div>
+            <hr>
+            <div class="w3-container">
+              <h5>Dashboard</h5>
+            </div>
+            <div class="w3-bar-block">
+                <a href="{% url 'dashboard' %}" class="w3-bar-item w3-button w3-padding"><i class="fa fa-users fa-fw"></i>&nbsp; Overview</a>
+                <a href="{% url 'daily' %}" class="w3-bar-item w3-button w3-padding"><i class="fa fa-exclamation fa-fw"></i>&nbsp; My actions</a>
+                <a href="{% url 'situation' %}" class="w3-bar-item w3-button w3-padding"><i class="fa fa-globe-americas fa-fw"></i>&nbsp; Current situation</a>
+                <a href="{% url 'simulation' %}" class="w3-bar-item w3-button w3-padding"><i class="fa fa-chart-bar fa-fw"></i>&nbsp; Simulations</a>
+                <a href="{% url 'quiz' %}" class="w3-bar-item w3-button w3-padding w3-pale-yellow"><i class="fas fa-question"></i>&nbsp; Quiz </a>
+                <a href="{% url 'customsignup' %}" class="w3-bar-item w3-button w3-padding"><i class="fa fa-cog fa-fw"></i>&nbsp; User Settings</a><br><br>
+                
+            </div>
+            <script>
+                // Get the Sidebar
+                var mySidebar = document.getElementById("mySidebar");
+                
+                // Get the DIV with overlay effect
+                var overlayBg = document.getElementById("myOverlay");
+                
+                // Toggle between showing and hiding the sidebar, and add overlay effect
+                function w3_open() {
+                  if (mySidebar.style.display === 'block') {
+                    mySidebar.style.display = 'none';
+                    overlayBg.style.display = "none";
+                  } else {
+                    mySidebar.style.display = 'block';
+                    overlayBg.style.display = "block";
+                  }
+                }
+                
+                // Close the sidebar with the close button
+                function w3_close() {
+                  mySidebar.style.display = "none";
+                  overlayBg.style.display = "none";
+                }
+            </script>
+        </nav>
 
-        <div class="w3-container w3-quarter" style="margin-top:43px;">
-            <button class="w3-button w3-dark-grey w3-large">Back to Dashboard</button>
-        </div>
+        <div class="w3-main" style="margin-left:200px;margin-top:43px;">
+
+            <div class="w3-container w3-quarter">
+                <p></p>
+            </div>
+        
+        
 
          <!-- WRONG -->
-         <div id="f0" class="w3-modal ">
-            <div class="w3-modal-content w3-light-gray w3-card-4 w3-animate-zoom" style="max-width:600px">
-          
-              <div class="w3-center w3-red">
-                <span onclick="document.getElementById('f0').style.display='none'" class="w3-button w3-xlarge w3-transparent w3-display-topright" title="Close Modal">×</span>
-                <h1>Wrong!</h1>
-              </div>
-        
-              <form class="w3-container w3-light-gray" >
-                <div class="w3-section w3-center">
-                    Try again...
+            <div id="f0" class="w3-modal ">
+                <div class="w3-modal-content w3-light-gray w3-card-4 w3-animate-zoom" style="max-width:600px">
+            
+                    <div class="w3-center w3-red">
+                        <span onclick="document.getElementById('f0').style.display='none'" class="w3-button w3-xlarge w3-transparent w3-display-topright" title="Close Modal">×</span>
+                        <h1>Wrong!</h1>
+                    </div>
+                
+                    <form class="w3-container w3-light-gray" >
+                        <div class="w3-section w3-center">
+                            Try again...
+                        </div>
+                    </form>
+                
+                    <div class="w3-container w3-border-top w3-center w3-padding-16 w3-light-grey">
+                        <button onclick="document.getElementById('f0').style.display='none'" type="button" class="w3-button w3-red">OK !</button>
+                    </div>
+                
                 </div>
-              </form>
-        
-              <div class="w3-container w3-border-top w3-center w3-padding-16 w3-light-grey">
-                <button onclick="document.getElementById('f0').style.display='none'" type="button" class="w3-button w3-red">OK !</button>
-              </div>
-        
             </div>
-          </div>
-        </div>
-
-
        
-
-        <div class="w3-container w3-half w3-teal w3-center" style="margin-top:43px;">
-            <div class="w3-right">
-                <br><i class="fas fa-smile-wink"></i>
+            <div class="w3-container w3-half w3-teal w3-center">
+                <div class="w3-right">
+                    <br><i class="fas fa-smile-wink"></i>
+                </div>
+                
+                <h1><b>Info - Quiz !!</b></h1>
+                <h4>Inform yourself in a fun way</h4>
+                <p>Randomly displayed questions. See the bottom of the page for sources</p>
+                
+                
             </div>
-            
-            <h1><b>Info - Quiz !!</b></h1>
-            <h4>Inform yourself in a fun way</h4>
-            <p>Randomly displayed questions. See the bottom of the page for sources</p>
-            
-            
+            <script src="{% static 'main/quiz_j.js' %}"></script>
+            <div class="w3-third w3-dark-grey w3-center" style="margin-left:33.333%; margin-top:5%">
+                <p><center>
+                    <a href="https://www.who.int/news-room/q-a-detail/q-a-coronaviruses">Q & A on coronaviruses (COVID-19) - WHO</a><br>
+                    <a href="https://www.who.int/emergencies/diseases/novel-coronavirus-2019/advice-for-public">Advice for the public - WHO</a><br>
+                    <a href="https://www.infectioncontroltoday.com/hand-hygiene/debunking-five-most-common-handwashing-myths">Debunking the Five Most Common Handwashing Myths - ICT</a><br>
+                    <a href="https://www.ecdc.europa.eu/en/covid-19/questions-answers">Q & A on COVID-19 - ECDC</a><br>
+                    <a href="https://www.who.int/emergencies/diseases/novel-coronavirus-2019/advice-for-public/myth-busters">Myth busters on COVID-19 - WHO</a><br>
+                
+                </center></p>
+            </div>
         </div>
-
-        kikou <br>
-        <script src="quiz_j.js"></script>
-        <div class="w3-third w3-dark-grey w3-center" style="margin-left:33.333%; margin-top:5%">
-            <p><center>
-                <a href="https://www.who.int/news-room/q-a-detail/q-a-coronaviruses">Q & A on coronaviruses (COVID-19) - WHO</a><br>
-                <a href="https://www.who.int/emergencies/diseases/novel-coronavirus-2019/advice-for-public">Advice for the public - WHO</a><br>
-                <a href="https://www.infectioncontroltoday.com/hand-hygiene/debunking-five-most-common-handwashing-myths">Debunking the Five Most Common Handwashing Myths - ICT</a><br>
-                <a href="https://www.ecdc.europa.eu/en/covid-19/questions-answers">Q & A on COVID-19 - ECDC</a><br>
-                <a href="https://www.who.int/emergencies/diseases/novel-coronavirus-2019/advice-for-public/myth-busters">Myth busters on COVID-19 - WHO</a><br>
-            
-            </center></p>
-        </div>
-        
         
 
 

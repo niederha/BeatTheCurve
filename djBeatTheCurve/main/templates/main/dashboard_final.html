@@ -1,3 +1,6 @@
+<!DOCTYPE html>
+{% load static %}
+
 <html>
     <head>
         <meta charset="UTF-8">
@@ -11,7 +14,6 @@
         <style>
             html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
         </style>
-
     </head>
 
     <body class="w3-light-grey">
@@ -21,14 +23,13 @@
             <span class="w3-bar-item w3-right">Beat The Curve</span>
         </div>
 
-
         <nav class="w3-sidebar w3-collapse w3-white w3-animate-left" style="z-index:3;width:200px;" id="mySidebar"><br>
             <div class="w3-container w3-row">
               <div class="w3-col s4">
-                <img src="/w3images/avatar2.png" class="w3-circle w3-margin-right" style="width:46px">
+
               </div>
               <div class="w3-col s8 w3-bar">
-                <span>Welcome, <strong>Mike</strong></span><br>
+                <span>Welcome, <strong>{{ user.username }}</strong></span><br>
                 <a href="#" class="w3-bar-item w3-button"><i class="fa fa-envelope"></i></a>
                 <a href="#" class="w3-bar-item w3-button"><i class="fa fa-user"></i></a>
                 <a href="#" class="w3-bar-item w3-button"><i class="fa fa-cog"></i></a>
@@ -43,7 +44,9 @@
                 <a href="{% url 'daily' %}" class="w3-bar-item w3-button w3-padding"><i class="fa fa-exclamation fa-fw"></i>&nbsp; My actions</a>
                 <a href="{% url 'situation' %}" class="w3-bar-item w3-button w3-padding"><i class="fa fa-globe-americas fa-fw"></i>&nbsp; Current situation</a>
                 <a href="{% url 'simulation' %}" class="w3-bar-item w3-button w3-padding"><i class="fa fa-chart-bar fa-fw"></i>&nbsp; Simulations</a>
+                <a href="{% url 'quiz' %}" class="w3-bar-item w3-button w3-padding"><i class="fas fa-question"></i>&nbsp; Quiz </a>
                 <a href="{% url 'customsignup' %}" class="w3-bar-item w3-button w3-padding"><i class="fa fa-cog fa-fw"></i>&nbsp; User Settings</a><br><br>
+                
             </div>
             <script>
                 // Get the Sidebar
@@ -81,7 +84,7 @@
             
             <div class="w3-row-padding w3-margin-bottom">
                 <div class="w3-quarter"> 
-                    <IMG src="BTC.png" height="100px"\> 
+                    <IMG src="{% static 'main/BTC.png' %}" height="100px"\> 
                 </div>
                 <div class="w3-quarter">
                     <div class="w3-container w3-teal w3-padding-16">
@@ -105,6 +108,7 @@
                         </div>  
                         <h4>
                             <b> {{ score }} </b> points
+
                             <!-- <script language="Javascript">
                                 var points = 1931;
                                 document.write("<b>"+points+"</b> points");
@@ -116,19 +120,62 @@
             </div>
             
             
-            <div class="w3-half"><center><h5>Trophies:</h5><br>
-                <h1>
-                    <i class="fa fa-toilet-paper"></i>
-                </h1><br>
-                <h1>
-                    <i class="fa fa-trophy"></i>
-                </h1><br>
-                <h1>
-                    <i class="fa fa-dragon"></i>
-                </h1>
-                <br><br><br><br>
-                </center>
-            </div>
+            <div class="w3-half"><center><h5>Trophies:</h5>
+                <script>
+                    if(0){
+                        document.write('<div class="w3-third" style="color: orange"><h1><i class="fa fa-toilet-paper"></i></h1>no panick-buying<br><br></div>');
+                    }
+                    else{
+                        document.write('<div class="w3-third" style="color:black"><h1><i class="fa fa-toilet-paper"></i></h1>no panick-buying<br><br></div>');
+                    }
+
+                    if(1){
+                        document.write('<div class="w3-third" style="color:orange"><h1><i class="fa fa-baby"></i></h1>beginner:<br>points > 25</div>');
+                    }
+                    else{
+                        document.write('<div class="w3-third" style="color:black"><h1><i class="fa fa-baby"></i></h1>beginner:<br>points > 25</div>');
+                    }
+
+                    if(1){
+                        document.write('<div class="w3-third" style="color:orange"><h1><i class="fas fa-hands-wash"></i></h1>hygiene<br><br></div>');
+                    }
+                    else{
+                        document.write('<div class="w3-third" style="color:black"><h1><i class="fas fa-hands-wash"></i></h1>hygiene<br><br></div>');
+                    }
+
+                    if(1){
+                        document.write('<div class="w3-third" style="color:orange"><h1><i class="fa fa-mask"></i></h1>saved people > 100<br><br></div>');
+                    }
+                    else{
+                        document.write('<div class="w3-third" style="color:black"><h1><i class="fa fa-mask"></i></h1>saved people > 100<br><br></div>');
+                    }
+
+                </script>
+                
+               
+                <div title="toilet-paper" class="w3-third" style="color:black">
+                    <h1><i class="fa fa-hiking"></i></h1>medium:<br>points > 100
+                </div>
+
+                <div class="w3-third" style="color:black">
+                    <h1><i class="fa fa-award"></i></h1>Quiz<br><br>
+                </div>
+
+
+                <div title="toilet-paper" class="w3-third" style="color:black">
+                    <h1><i class="fa fa-couch"></i></h1>#stayhome<br>
+                </div>
+               
+                <div title="toilet-paper" class="w3-third" style="color:black">
+                    <h1><i class="fa fa-broom"></i></h1>wizard<br>points > 500
+                </div>
+
+                <div title="toilet-paper" class="w3-third" style="color:black">
+                    <h1><i class="fa fa-dumbbell"></i></h1>exercise<br>
+                </div>
+
+            </center>
+        </div>
 
 
             <div class="w3-third">

@@ -19,20 +19,20 @@
 
 <body class="w3-light-grey">
     <div class="w3-bar w3-top w3-black w3-large" style="z-index:4">
+        <button class="w3-bar-item w3-button w3-hide-large w3-hover-none w3-hover-text-light-grey" onclick="w3_open();"><i class="fa fa-bars"></i> &nbsp;Menu</button>
         <span class="w3-bar-item w3-right">Beat The Curve</span>
-        <span class="w3-bar-item w3-left">Daily logs</span>
     </div>
 
     <nav class="w3-sidebar w3-collapse w3-white w3-animate-left" style="z-index:3;width:200px;" id="mySidebar"><br>
         <div class="w3-container w3-row">
           <div class="w3-col s4">
-            <img src="/w3images/avatar2.png" class="w3-circle w3-margin-right" style="width:46px">
+            
           </div>
           <div class="w3-col s8 w3-bar">
-            <span>Welcome, <strong>Mike</strong></span><br>
-            <a href="" class="w3-bar-item w3-button"><i class="fa fa-envelope"></i></a>
-            <a href="" class="w3-bar-item w3-button"><i class="fa fa-user"></i></a>
-            <a href="" class="w3-bar-item w3-button"><i class="fa fa-cog"></i></a>
+            <span>Welcome, <strong>{{ user.username }}</strong></span><br>
+            <a href="#" class="w3-bar-item w3-button"><i class="fa fa-envelope"></i></a>
+            <a href="#" class="w3-bar-item w3-button"><i class="fa fa-user"></i></a>
+            <a href="#" class="w3-bar-item w3-button"><i class="fa fa-cog"></i></a>
           </div>
         </div>
         <hr>
@@ -41,10 +41,12 @@
         </div>
         <div class="w3-bar-block">
             <a href="{% url 'dashboard' %}" class="w3-bar-item w3-button w3-padding "><i class="fa fa-users fa-fw"></i>&nbsp; Overview</a>
-            <a href="{% url 'daily' %}" class="w3-bar-item w3-button w3-padding w3-pale-yellow"><i class="fa fa-exclamation fa-fw"></i>&nbsp; My actions </a>
+            <a href="{% url 'daily' %}" class="w3-bar-item w3-button w3-padding w3-pale-yellow"><i class="fa fa-exclamation fa-fw"></i>&nbsp; My actions</a>
             <a href="{% url 'situation' %}" class="w3-bar-item w3-button w3-padding"><i class="fa fa-globe-americas fa-fw"></i>&nbsp; Current situation</a>
             <a href="{% url 'simulation' %}" class="w3-bar-item w3-button w3-padding"><i class="fa fa-chart-bar fa-fw"></i>&nbsp; Simulations</a>
+            <a href="{% url 'quiz' %}" class="w3-bar-item w3-button w3-padding"><i class="fas fa-question"></i>&nbsp; Quiz </a>
             <a href="{% url 'customsignup' %}" class="w3-bar-item w3-button w3-padding"><i class="fa fa-cog fa-fw"></i>&nbsp; User Settings</a><br><br>
+            
         </div>
         <script>
             // Get the Sidebar

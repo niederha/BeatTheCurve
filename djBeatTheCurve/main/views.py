@@ -189,7 +189,7 @@ def simulation(request):
 def quiz(request):
     print("HELLO FROM QUIZ")
 
-    return render(request, 'main/quiz.html', {})
+    return render(request, 'main/info_quiz.html', {})
 
 def situation(request):
     print("HELLO FROM CURRENT SITUATION PAGE")
