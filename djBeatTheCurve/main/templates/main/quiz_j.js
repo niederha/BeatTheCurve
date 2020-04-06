@@ -187,7 +187,7 @@ function multiplechoice(i){
 
 
     document.write(`
-        <div class="w3-third w3-orange" style="margin-left:11.333%; margin-top:5%; height:55%">
+        <div class="w3-third w3-orange" style="margin-left:11.333%; margin-top:5%; height:52%">
             <center><h4><b>`+liste[i][1]+`</b></h4></center><br>
             <div style="margin-bottom:1%; margin-left:1%">
                 `+tableau[0][0]+`A.</button> 
@@ -207,7 +207,7 @@ function multiplechoice(i){
 
 
 function truefalse(i){
-    document.write("hello");
+
     document.write(`
         <div id="`+listvf[i][0]+`" class="w3-modal ">
             <div class="w3-modal-content w3-light-gray w3-card-4 w3-animate-zoom" style="max-width:600px">
@@ -242,7 +242,7 @@ function truefalse(i){
     }
 
     document.write(`
-    <div class="w3-third w3-orange" style="margin-left:11.333%; margin-top:5%; height:42%">
+    <div class="w3-third w3-orange" style="margin-left:11.333%; margin-top:5%; height:45%">
         <center><h4><b>True or False?</b> <br>`+listvf[i][1]+`</h4><br><br>
         <div style="margin-bottom:1%; margin-left:1%">
             <button onclick="document.getElementById('`+vrai+`').style.display='block'" class="w3-button w3-dark-grey w3-large">True</button>
