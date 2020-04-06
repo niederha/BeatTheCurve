@@ -58,9 +58,13 @@ def pie_id(De, R, N):
 
 
 S, I, Recovered, De, Severe, beds, Country_ISO = s.main(7,3,3,"DE")
+Saved_I, Saved_D = s.compute_saving(3, 3, 3, "DE")
 
+print(I[0])
 N = S[0]+I[0]+Recovered[0]+De[0]
-
 plot_sir(S, I, Recovered+De, np.linspace(0, 300, 300))
 pie_id(De, Recovered+De, N)
 plot_letality(Severe, De, np.linspace(0, 300, 300), beds)
+
+print(Saved_I)
+print(Saved_D)

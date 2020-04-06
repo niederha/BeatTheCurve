@@ -174,22 +174,74 @@ def sir(sim_length, deriv, deriv_basic, y0, t, N, beta, gamma, StartQ, Q, curren
     
     return S_array, I_array, R_array, De_array, Severe
 
-def compute_saving(De, De_nm, R, R_nm, N, sim_length):
-    #compute how many people saved from death and infection
-    
-    #infections:
-    Tot_i= R[len(R)-1]
-    Tot_i_nm = R_nm[len(R_nm)-1]
-    Saved_i = Tot_i_nm - Tot_i
-    Saved_i = Saved_i/N
-    
-    #deaths
-    Tot_d = De[len(De)-1]
-    Tot_d_nm = De_nm[len(De_nm)-1]
-    Saved_d = Tot_d_nm - Tot_d
-    Saved_d = Saved_d/N
-    return Saved_i, Saved_d
-    
+def get_beds(Country_ISO):
+    N = get_population(Country_ISO)
+    file = 'sir_simul/hosp_beds.csv'
+    with open(file) as fh:
+        rd = csv.DictReader(fh, delimiter=',')
+        for row in rd:
+            beds = row[Country_ISO]
+    beds = float(beds) * 0.5  # half of the beds available for epidemics
+    beds = beds / 1000 * N  # total nb of beds in country
+    return beds
+
+def get_population(Country_ISO):
+    gc = geonamescache.GeonamesCache()
+    countries = gc.get_countries()
+    country = countries.get(Country_ISO)
+
+    # prevent from crashng if ISO code wrong
+    if country == None:
+        N = 8 * 10 ** 7
+    else:
+        N = country.get('population')
+
+    return N
+
+def getIRD(Country_ISO):
+    I0 = 0
+    url = "https://coronavirus-monitor.p.rapidapi.com/coronavirus/cases_by_country.php"
+    headers = {
+        'x-rapidapi-host': "coronavirus-monitor.p.rapidapi.com",
+        'x-rapidapi-key': "815636d2f5msh5b6f6b41061625ep10f46fjsn4221a8a8f565"
+    }
+    response = requests.request("GET", url, headers=headers)
+    a = json.loads(response.text)
+    stat = (a['countries_stat'])
+
+    country = pycountry.countries.get(alpha_2=Country_ISO)
+    # protect from crashing in case ISO code not found
+    if country == None:
+        country_name = "not found"
+    else:
+        country_name = country.name
+
+    # corrected names manually
+    if country_name == "United Kingdom":
+        country_name = "UK"
+    elif country_name == "United States":
+        country_name = "USA"
+
+    for i in stat:
+        if i['country_name'] == country_name:
+            I0 = i['cases']
+            R0 = i['total_recovered']
+            D0 = i['deaths']
+
+            # convert to float
+            I0 = float(I0.replace(",", ""))
+            R0 = float(R0.replace(",", ""))
+            D0 = float(D0.replace(",", ""))
+            break
+
+    # fallback in case country_names don't match
+    if I0 == 0:
+        I0 = 70000
+        R0 = 0
+        D0 = 0
+
+    return I0, R0, D0
+
 
 ###### Users parameters function#####
 
@@ -243,6 +295,38 @@ def simulateUsersbehaviour(friends, central_loc, hands, sim_length, deriv, deriv
                curr_shop, dist,0, float('inf'), beds)
 
 
+
+####COMPUTE SAVINGS#####
+def compute_saving(friends=10, central_loc=3, hands=3, Country_ISO="CH", sim_length=300):
+    t= [0,1]
+    # compute how many people saved from death and infection
+
+    S, I, Recovered, De, Severe, beds, Country_ISO = main(friends, central_loc, hands, Country_ISO)
+
+    R = Recovered + De
+    # get country population
+    N = get_population(Country_ISO)
+
+    I0, R0, D0 = getIRD(Country_ISO)
+    S0 = N-I0-R0
+    y0 = S0, I0, R0, D0
+
+    S_nm, I_nm, R_nm, De_nm, Severe = sir_no_mesures(sim_length, deriv_basic, y0, t, N, beta, gamma, beds)
+    S, I, Recovered, De, Severe, beds, Country_ISO = main(friends, central_loc, hands, Country_ISO)
+    R = Recovered+De
+    # infections:
+    Tot_i = R[len(R) - 1]
+    Tot_i_nm = R_nm[len(R_nm) - 1]
+    Saved_i = Tot_i_nm - Tot_i
+    Saved_i = Saved_i / N
+
+    # deaths
+    Tot_d = De[len(De) - 1]
+    Tot_d_nm = De_nm[len(De_nm) - 1]
+    Saved_d = Tot_d_nm - Tot_d
+    Saved_d = Saved_d / N
+    return Saved_i, Saved_d
+
 ###MAIN#####
 
 #Input: 
@@ -255,86 +339,20 @@ def simulateUsersbehaviour(friends, central_loc, hands, sim_length, deriv, deriv
  
 def main(friends=10, central_loc=3, hands=3, Country_ISO="CH", sim_length=300):
     t=[0,1]
-    I0 = 0
-    
+
     #get country population
-    gc = geonamescache.GeonamesCache()
-    countries = gc.get_countries()
-    country = countries.get(Country_ISO)
-    
-    #prevent from crashng if ISO code wrong
-    if country == None:
-        N = 8*10**7
-    else:
-        N = country.get('population')
+    N = get_population(Country_ISO)
     
     #get country infected, dead, recovered (real time):
-    url = "https://coronavirus-monitor.p.rapidapi.com/coronavirus/cases_by_country.php"
-    headers = {
-		'x-rapidapi-host': "coronavirus-monitor.p.rapidapi.com",
-		'x-rapidapi-key': "815636d2f5msh5b6f6b41061625ep10f46fjsn4221a8a8f565"
-		}
-    response = requests.request("GET", url, headers=headers)
-    a = json.loads(response.text)
-    stat = (a['countries_stat'])
-
-    country = pycountry.countries.get(alpha_2=Country_ISO)
-    #protect from crashing in case ISO code not found
-    if country == None:
-        country_name = "not found"
-    else:
-        country_name = country.name
-	
-    #corrected names manually
-    if country_name == "United Kingdom":
-        country_name = "UK"
-    elif country_name == "United States":
-        country_name = "USA"
-
-    for i in stat:
-        if i['country_name'] == country_name:
-            I0 = i['cases']
-            R0 = i['total_recovered']
-            D0 = i['deaths']
-
-            #convert to float
-            I0 = float(I0.replace(",",""))
-            R0 = float(R0.replace(",",""))
-            D0 = float(D0.replace(",",""))
-            break
-            
-			
-    #fallback in case country_names don't match
-    if I0 == 0:
-        I0 = 70000
-        R0 = 0
-        D0 = 0
-
-	#print(I0)
-	#print(R0)
-	#print(D0)
+    I0, R0, D0 = getIRD(Country_ISO)
 
     # Everyone else, S0, is susceptible to infection initially.
     S0 = N - I0 - R0
-    
     y0 = S0, I0, R0, D0
-    
-    #initialize array
-    S_array = np.ones(sim_length)*S0
-    I_array = np.ones(sim_length)*I0
-    R_array = np.ones(sim_length)*R0
-    De_array = np.zeros(sim_length)
-    Severe   = np.zeros(sim_length)
- 
+
     #get nb beds
-    file = 'sir_simul/hosp_beds.csv'
-    with open(file) as fh:
-        rd = csv.DictReader(fh, delimiter=',')
-        for row in rd:
-            beds = row[Country_ISO]
-    beds = float(beds)*0.5 #half of the beds available for epidemics
-    beds = beds/1000*N  #total nb of beds in country
-    
+    beds = get_beds(Country_ISO)
+
     S, I, R, De, Severe = simulateUsersbehaviour(friends, central_loc, hands, sim_length, deriv, deriv_basic, y0, t, N, beds)
     Recovered = R-De
     
