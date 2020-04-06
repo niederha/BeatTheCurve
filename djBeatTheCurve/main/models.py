@@ -92,6 +92,7 @@ class GameInfo(models.Model):
 class OutingReason(models.Model):
 
     class OutingReasonChoice(models.TextChoices):
+        NOT_OUT = 'NOT_OUT', _("Did not go out")
         GROCERY = 'GROCERY_SHOPPING', _('Grocery shopping')
         MEDICAL = 'MEDICAL', _('Medical reasons')
         FRIENDS = 'FRIENDS', _('Meet friends')
@@ -101,8 +102,21 @@ class OutingReason(models.Model):
     name = models.CharField(
         max_length=200,
         choices=OutingReasonChoice.choices,
-        default=None,
+        default=OutingReasonChoice.NOT_OUT,
     )
+
+    def is_sensible(self):
+        sensible = [self.OutingReasonChoice.GROCERY, self.OutingReasonChoice.MEDICAL,
+            self.OutingReasonChoice.DOG, self.OutingReasonChoice.EXERCISE]
+        
+        return self.name in sensible
+
+    def get_score(self):
+        scores_map = dict.fromkeys([self.OutingReasonChoice.GROCERY, self.OutingReasonChoice.MEDICAL,
+            self.OutingReasonChoice.DOG, self.OutingReasonChoice.EXERCISE], 0)
+        scores_map[self.OutingReasonChoice.FRIENDS] = -5
+
+        return scores_map[self.name]
 
     def __str__(self):
         return self.name
@@ -123,11 +137,7 @@ class LogEntry(models.Model):
         choices=HandWashRanges.choices,
         default=HandWashRanges.MIDDLE,
     )
-    leave = models.BooleanField(default='n', choices=[('n', 'No'), ('y', 'Yes')])
-    crowded_places = models.BooleanField(default='n', choices=[('n', 'No'), ('y', 'Yes')], blank=True, null=True)
-    hand_wash_after_leave = models.BooleanField(default='y', choices=[('n', 'No'), ('y', 'Yes')], blank=True, null=True)
+    leave = models.CharField(max_length=1, default='n', choices=[('n', 'No'), ('y', 'Yes')])
+    crowded_places = models.CharField(max_length=1, default='n', choices=[('n', 'No'), ('y', 'Yes')])
+    hand_wash_after_leave = models.CharField(max_length=1, default='y', choices=[('n', 'No'), ('y', 'Yes')])
     reason = models.ManyToManyField(OutingReason, default=None, blank=True)
-
-
-
-    HandWashRanges.choices()

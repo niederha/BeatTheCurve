@@ -15,6 +15,7 @@ from .models import Symptom
 from .forms import CustomSignUpForm, EasyUserCreationForm, LogEntryForm
 
 from datetime import datetime, timedelta
+from dateutil import tz
 
 import pandas as pd
 
@@ -97,16 +98,41 @@ def dashboard(request):
 
 
 def daily(request):
+    def save_log(user, form):
+        log_entry = form.save(commit=False)
+        log_entry.user = user # Set log entry to current user
+        log_entry.date = datetime.now(tz.gettz(settings.TIME_ZONE))
+        log_entry.save()
+        form.save_m2m()
+
+    def update_score(user, form):
+        game_info = GameInfo.objects.get(user=user)
+        if form.cleaned_data['leave'] == 'n':
+            game_info.score += 10
+        else:
+            if form.cleaned_data['hand_wash_after_leave'] == 'y':
+                game_info.score += 5
+            
+            reasons = list(form.cleaned_data['reason'])
+            for reason in reasons:
+                if not reason.is_sensible():
+                    game_info.score += reason.get_score()
+                
+
+        game_info.save()
+        
+    # TODO: Should check if user is doing modifications, or if it is the first daily submission today
+    # to compute score correctly. To ease the process, the score of a submission should be added to the daily model.
+    # This way, a modification can easily first subtract the score that was added, and then add the modified one that
+    # has been updated.
+
     if request.method == 'POST':
         form = LogEntryForm(request.POST)
 
         if form.is_valid():
             print("LogEntry form is valid")
-            log_entry = form.save(commit=False)
-            log_entry.user = request.user # Set log entry to current user
-            log_entry.date = datetime.now(settings.TIME_ZONE)
-            log_entry.save()
-            form.save_m2m()
+            save_log(request.user, form)
+            update_score(request.user, form)
 
             print("Successfully save log entry, redirecting to dashboard")
             return HttpResponseRedirect('dashboard')
@@ -188,8 +214,7 @@ def simulation(request):
 
     # TODO: Define method to get back mean of hand wash after leave (only if leave was true)
     # THOSE FUNCTiONS SHOULD PROBABLY BE ACCESSIBLE TO DAILIES TO UPDATE THE SCORE
-
-        
+    
 
 
         
