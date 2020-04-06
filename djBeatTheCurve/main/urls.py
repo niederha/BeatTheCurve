@@ -10,5 +10,7 @@ urlpatterns = [
     path('customsignup', views.customSignUp, name="customsignup"),
     path('dashboard', views.dashboard, name="dashboard"),
     path('daily', views.daily, name="daily"),
-    path('simulation', views.simulation, name="simulation")
+    path('quiz', views.quiz, name="quiz"),
+    path('situation', views.situation, name="situation"),
+    path('simulation', views.simulation, name="simulation")   
 ]

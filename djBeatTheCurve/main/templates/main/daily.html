@@ -1,7 +1,6 @@
 <!DOCTYPE html>
-
 {% load filters %}
-{% load static %}
+
 <html>
 <head>
     
@@ -9,7 +8,6 @@
     <title>Beat the curve - Daily Logs</title>
     <meta name="description" content="An attempt to make login page">
     <meta name="author" content="Max Dupont">
-    <link rel="stylesheet" href={% static "main/toggle-radios.css" %}>
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <script src="https://kit.fontawesome.com/9606692b7c.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
@@ -21,100 +19,160 @@
 
 <body class="w3-light-grey">
     <div class="w3-bar w3-top w3-black w3-large" style="z-index:4">
+        <button class="w3-bar-item w3-button w3-hide-large w3-hover-none w3-hover-text-light-grey" onclick="w3_open();"><i class="fa fa-bars"></i> &nbsp;Menu</button>
         <span class="w3-bar-item w3-right">Beat The Curve</span>
-        <span class="w3-bar-item w3-left">Daily logs</span>
     </div>
 
-    <div class="w3-main" style="margin-left:300px;margin-top:43px;"></div>
+    <nav class="w3-sidebar w3-collapse w3-white w3-animate-left" style="z-index:3;width:200px;" id="mySidebar"><br>
+        <div class="w3-container w3-row">
+          <div class="w3-col s4">
+            
+          </div>
+          <div class="w3-col s8 w3-bar">
+            <span>Welcome, <strong>{{ user.username }}</strong></span><br>
+            <a href="#" class="w3-bar-item w3-button"><i class="fa fa-envelope"></i></a>
+            <a href="#" class="w3-bar-item w3-button"><i class="fa fa-user"></i></a>
+            <a href="#" class="w3-bar-item w3-button"><i class="fa fa-cog"></i></a>
+          </div>
+        </div>
+        <hr>
+        <div class="w3-container">
+          <h5>Dashboard</h5>
+        </div>
+        <div class="w3-bar-block">
+            <a href="{% url 'dashboard' %}" class="w3-bar-item w3-button w3-padding "><i class="fa fa-users fa-fw"></i>&nbsp; Overview</a>
+            <a href="{% url 'daily' %}" class="w3-bar-item w3-button w3-padding w3-pale-yellow"><i class="fa fa-exclamation fa-fw"></i>&nbsp; My actions</a>
+            <a href="{% url 'situation' %}" class="w3-bar-item w3-button w3-padding"><i class="fa fa-globe-americas fa-fw"></i>&nbsp; Current situation</a>
+            <a href="{% url 'simulation' %}" class="w3-bar-item w3-button w3-padding"><i class="fa fa-chart-bar fa-fw"></i>&nbsp; Simulations</a>
+            <a href="{% url 'quiz' %}" class="w3-bar-item w3-button w3-padding"><i class="fas fa-question"></i>&nbsp; Quiz </a>
+            <a href="{% url 'customsignup' %}" class="w3-bar-item w3-button w3-padding"><i class="fa fa-cog fa-fw"></i>&nbsp; User Settings</a><br><br>
+            
+        </div>
+        <script>
+            // Get the Sidebar
+            var mySidebar = document.getElementById("mySidebar");
+            
+            // Get the DIV with overlay effect
+            var overlayBg = document.getElementById("myOverlay");
+            
+            // Toggle between showing and hiding the sidebar, and add overlay effect
+            function w3_open() {
+              if (mySidebar.style.display === 'block') {
+                mySidebar.style.display = 'none';
+                overlayBg.style.display = "none";
+              } else {
+                mySidebar.style.display = 'block';
+                overlayBg.style.display = "block";
+              }
+            }
+            
+            // Close the sidebar with the close button
+            function w3_close() {
+              mySidebar.style.display = "none";
+              overlayBg.style.display = "none";
+            }
+        </script>
+    </nav>
+        
+
+    <div class="w3-main" style="margin-left:200px;margin-top:43px;">
         <header class="w3-container " style="padding-top:22px">
             <div class="w3-container w3-center">
                 <h3><b> <i class="fas fa-address-card "></i> Daily logs </b></h3>
             </div>
         </header>
+        
 
-    <div class="w3-row w3-row-padding w3-margin-bottom">
-        <div class="w3-quarter w3-container ">
-            <p></p>
-        </div>
+        <div class="w3-row w3-row-padding w3-margin-bottom ">
 
-        <div class="w3-half w3-container">
-            <div class="w3-container w3-padding-16">
-                <div class="w3-container w3-teal">
-                    <h2>Daily logs</h2>
-                </div>
-
-                <div class="w3-container">
-                    <p>Here you are welcome to register the actions you take to fight COVID-19 today. </p>
-                </div>
-
-                <div class="w3-container w3-teal">
-                    <h2>Logs</h2>
-                </div>
-                <form action="{% url 'daily' %}" method= "POST">
-
-                    {% csrf_token %}
-
-                    <div class="w3-container">
-                        <p>
-                        <label for="option" class=" w3-text-teal">
-                            <b>Did you go out more than 15 minutes today? :</b>
-                        </label>
-                        </p>
-                        {{ form.leave }}
+            <div class="w3-quarter w3-container ">
+                <p></p>
+            </div>
+ 
+            <div class="w3-half w3-container w3-card" >
+                <div class="w3-container w3-padding-16">
+                    <div class="w3-container w3-teal">
+                        <h2>Daily logs</h2>
                     </div>
-                    
-                    <div class="w3-container">
-                        <div class="w3-quarter" style="width:12%">
-                            <label for="option" class=" w3-text-teal">
-                                <p><b><br>If yes:</b></p>
-                            </label>
-                        </div>
 
-                        <div class="w3-threequarter">
-                            <div>
-                                <p>
+                    <div class="w3-container">
+                        <p>Here you are welcome to register the actions you take to fight COVID-19 today. </p>
+                    </div>
+
+                    <div class="w3-container w3-teal">
+                        <h2>Logs</h2>
+                    </div>
+                    <form action="{% url 'daily' %}" method= "POST">
+
+                        {% csrf_token %}
+
+                        <div class="w3-container">
+                            <p>
+                            <label for="option" class=" w3-text-teal">
+                                <b>Did you go out more than 15 minutes today? :</b>
+                            </label>
+                            </p>
+                            {{ form.leave }}
+                        </div>
+                        
+                        <div class="w3-container">
+                            <div class="w3-quarter" style="width:12%">
                                 <label for="option" class=" w3-text-teal">
-                                    <b><br>Did you wash your hands when comming back home:</b>
+                                    <p><b><br>If yes:</b></p>
                                 </label>
-                                </p>
-                                {{ form.hand_wash_after_leave }}
-                                              
                             </div>
 
-                            <p>
-                                <label class="w3-text-teal">
-                                    <b><br>Why did you go out?</b>
-                                </label><br><br>
-                                {{ form.reason }}
-                            </p>
+                            <div class="w3-threequarter">
+                                <div>
+                                    <p>
+                                    <label for="option" class=" w3-text-teal">
+                                        <b><br>Did you wash your hands when comming back home:</b>
+                                    </label>
+                                    </p>
+                                    {{ form.hand_wash_after_leave }}
+                                                
+                                </div>
+
+                                <p>
+                                    <label class="w3-text-teal">
+                                        <b><br>Why did you go out?</b>
+                                    </label><br><br>
+                                    {{ form.reason }}
+                                </p>
+                            </div>
                         </div>
-                    </div>
-                    
-                    <div class="w3-container">
-                        <p>
-                        <label for="option" class=" w3-text-teal">
-                            <b>Did you spend time in a crowded place? :</b>
-                        </label>
-                        </p>
-                        {{ form.crowded_places }}
-                    </div>
+                        
+                        <div class="w3-container">
+                            <p>
+                            <label for="option" class=" w3-text-teal">
+                                <b>Did you spend time in a crowded place? :</b>
+                            </label>
+                            </p>
+                            {{ form.crowded_places }}
+                        </div>
 
-                    <div class="w3-container">
-                        <p>
-                        <label for="option" class=" w3-text-teal">
-                            <b>How frequently do you wash your hands? :</b>
-                        </label>
-                        </p>
-                        {{ form.hand_wash_frequency }}
-                    </div>
+                        <div class="w3-container">
+                            <p>
+                            <label for="option" class=" w3-text-teal">
+                                <b>How frequently do you wash your hands? :</b>
+                            </label>
+                            </p>
+                            {{ form.hand_wash_frequency }}
+                        </div>
 
-                    <div class="w3-container" style="margin-left:75%">
-                        <input type="submit" class="w3-btn w3-blue-grey" value="Submit">
-                    </div>
-                </form>
- 
+                        <div class="w3-container" style="margin-left:75%">
+                            <input type="submit" class="w3-btn w3-blue-grey" value="Submit">
+                        </div>
+                    </form>
+    
+                </div>
             </div>
+
+            <div class="w3-quarter w3-container ">
+                <p></p>
+            </div>
+
         </div>
-    </div>  
+    </div>
 </body>
 </html>
