@@ -1,0 +1,101 @@
+<!doctype html>
+
+{% load filters %}
+
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+   <!-- <h4>Hello username</h4>
+    <br>-->
+    <title>Sign up</title>
+    <meta name="description" content="Sign up page">
+    <meta name="author" content="Amaia Soubelet">
+    <script src="https://kit.fontawesome.com/9606692b7c.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+    <style>
+        html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
+    </style>
+</head>
+
+<body class="w3-light-grey">
+
+    <div class="w3-bar w3-top w3-black w3-large" style="z-index:4">
+        <span class="w3-bar-item w3-right">Beat The Curve</span>
+        <span class="w3-bar-item w3-left">Sign up</span>
+    </div>
+   
+    <div class="w3-main" style="margin-left:300px;margin-top:43px;"></div>
+        <header class="w3-container w3-center" style="padding-top:22px">
+            <h3><b> <i class="fas fa-address-card"></i>Your infos</b></h3>
+        </header>
+    <div class="w3-container w3-row"> 
+
+        <div class="w3-quarter">
+            <p></p>
+        </div>
+        <div class="w3-half w3-card">
+            <div class="w3-container w3-teal">
+                <h2>Custom informations</h2>
+                <p>
+                    As you are new here, we'd like to have a few informations about you in order to furnish personalised simulations
+                </p>
+            </div>
+            <form action="{% url 'customsignup' %}" method="post">
+                {% csrf_token %}
+                
+                <div class="w3-container">
+                    <p>
+                        <label class="w3-text-teal">
+                            <i class="fas fa-baby"></i> <b>Age</b>
+                        </label>
+                        {{ form.age }}</td>
+                    </p>
+                </div>
+
+                <div class="w3-container">
+                    <p>
+                        <label class="w3-text-teal">
+                            <i class="fas fa-genderless"></i> <b>Gender</b>
+                        </label>
+                        {{ form.gender }} </td>
+                    </p>
+                </div>
+
+                <div class="w3-container">
+                    <p>                       
+                        <label class="w3-text-teal">
+                            <i class="fas fa-home"></i> <b>Household size</b>
+                        </label>
+                        {{ form.household_size }} 
+                    </p>
+                </div>
+
+                <div class="w3-container">
+                    <p>                       
+                        <label class="w3-text-teal">
+                            <i class="fas fa-disease"></i> <b>Comorbidities</b>
+                        </label>
+                        {{ form.commorbidities }} 
+                    </p>
+                </div>
+
+                <div class="w3-container">
+                    <p>                       
+                        <label class="w3-text-teal">
+                            <i class="fas fa-stethoscope"></i> <b>Current symptoms</b>
+                        </label>
+                        {{ form.symptoms }} 
+                    </p>
+                </div>
+
+                <div class="w3-container">
+                    <p>
+                        <input class="w3-button w3-blue-grey" type="submit" value="Sign up">
+                    </p>
+                </div>
+            </form>
+        </div>
+    </div> 
+</body>
+</html>

@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+{% load static %}
+
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Beat the Curve - Dashboard </title>
+        <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+        <meta name="description" content="The Dashboard">
+        <meta name="author" content="Lucie">
+        <script src="https://kit.fontawesome.com/9606692b7c.js" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <style>
+            html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
+        </style>
+    </head>
+
+    <body class="w3-light-grey">
+        <meta charset="UTF-8">
+        <div class="w3-bar w3-top w3-black w3-large" style="z-index:4">
+            <button class="w3-bar-item w3-button w3-hide-large w3-hover-none w3-hover-text-light-grey" onclick="w3_open();"><i class="fa fa-bars"></i> &nbsp;Menu</button>
+            <span class="w3-bar-item w3-right">Beat The Curve</span>
+        </div>
+
+        <nav class="w3-sidebar w3-collapse w3-white w3-animate-left" style="z-index:3;width:200px;" id="mySidebar"><br>
+            <div class="w3-container w3-row">
+              <div class="w3-col s4">
+
+              </div>
+              <div class="w3-col s8 w3-bar">
+                <span>Welcome, <strong>{{ user.username }}</strong></span><br>
+                <a href="#" class="w3-bar-item w3-button"><i class="fa fa-envelope"></i></a>
+                <a href="#" class="w3-bar-item w3-button"><i class="fa fa-user"></i></a>
+                <a href="#" class="w3-bar-item w3-button"><i class="fa fa-cog"></i></a>
+              </div>
+            </div>
+            <hr>
+            <div class="w3-container">
+              <h5>Dashboard</h5>
+            </div>
+            <div class="w3-bar-block">
+                <a href="{% url 'dashboard' %}" class="w3-bar-item w3-button w3-padding w3-pale-yellow"><i class="fa fa-users fa-fw"></i>&nbsp; Overview</a>
+                <a href="{% url 'daily' %}" class="w3-bar-item w3-button w3-padding"><i class="fa fa-exclamation fa-fw"></i>&nbsp; My actions</a>
+                <a href="{% url 'situation' %}" class="w3-bar-item w3-button w3-padding"><i class="fa fa-globe-americas fa-fw"></i>&nbsp; Current situation</a>
+                <a href="{% url 'simulation' %}" class="w3-bar-item w3-button w3-padding"><i class="fa fa-chart-bar fa-fw"></i>&nbsp; Simulations</a>
+                <a href="{% url 'quiz' %}" class="w3-bar-item w3-button w3-padding"><i class="fas fa-question"></i>&nbsp; Quiz </a>
+                <a href="{% url 'customsignup' %}" class="w3-bar-item w3-button w3-padding"><i class="fa fa-cog fa-fw"></i>&nbsp; User Settings</a><br><br>
+                
+            </div>
+            <script>
+                // Get the Sidebar
+                var mySidebar = document.getElementById("mySidebar");
+                
+                // Get the DIV with overlay effect
+                var overlayBg = document.getElementById("myOverlay");
+                
+                // Toggle between showing and hiding the sidebar, and add overlay effect
+                function w3_open() {
+                  if (mySidebar.style.display === 'block') {
+                    mySidebar.style.display = 'none';
+                    overlayBg.style.display = "none";
+                  } else {
+                    mySidebar.style.display = 'block';
+                    overlayBg.style.display = "block";
+                  }
+                }
+                
+                // Close the sidebar with the close button
+                function w3_close() {
+                  mySidebar.style.display = "none";
+                  overlayBg.style.display = "none";
+                }
+            </script>
+        </nav>
+        
+        
+        <div class="w3-main" style="margin-left:200px;margin-top:43px;">
+            <header class="w3-container " style="padding-top:22px">
+                <div class="w3-container w3-center">
+                    <h3><b> <i class="fa fa-users fa-fw"></i> Overview </b></h3>
+                </div>
+            </header>
+            
+            <div class="w3-row-padding w3-margin-bottom">
+                <div class="w3-quarter"> 
+                    <IMG src="{% static 'main/BTC.png' %}" height="100px"\> 
+                </div>
+                <div class="w3-quarter">
+                    <div class="w3-container w3-teal w3-padding-16">
+                        <div class="w3-right">
+                            <i class="fa fa-user-nurse"></i> 
+                        </div>  
+                        <h5>
+                            You saved {{ saved }} people!
+                            <!-- <script language="Javascript">
+                                var saved = 152;
+                                document.write("You saved "+saved+" people!");
+                            </script> -->
+                        </h5>
+                        
+                    </div>     
+                </div> 
+                <div class="w3-quarter">
+                    <div class="w3-container w3-orange w3-padding-16">
+                        <div class="w3-right">
+                            <i class="fa fa-dollar-sign"></i> 
+                        </div>  
+                        <h4>
+                            <b> {{ score }} </b> points
+
+                            <!-- <script language="Javascript">
+                                var points = 1931;
+                                document.write("<b>"+points+"</b> points");
+                            </script> -->
+                        </h4>  
+                    </div>     
+                </div>
+                <div class="w3-quarter"></div> 
+            </div>
+            
+            
+            <div class="w3-half"><center><h5>Trophies:</h5>
+                <script>
+                    if(0){
+                        document.write('<div class="w3-third" style="color: orange"><h1><i class="fa fa-toilet-paper"></i></h1>no panick-buying<br><br></div>');
+                    }
+                    else{
+                        document.write('<div class="w3-third" style="color:black"><h1><i class="fa fa-toilet-paper"></i></h1>no panick-buying<br><br></div>');
+                    }
+
+                    if(1){
+                        document.write('<div class="w3-third" style="color:orange"><h1><i class="fa fa-baby"></i></h1>beginner:<br>points > 25</div>');
+                    }
+                    else{
+                        document.write('<div class="w3-third" style="color:black"><h1><i class="fa fa-baby"></i></h1>beginner:<br>points > 25</div>');
+                    }
+
+                    if(1){
+                        document.write('<div class="w3-third" style="color:orange"><h1><i class="fas fa-hands-wash"></i></h1>hygiene<br><br></div>');
+                    }
+                    else{
+                        document.write('<div class="w3-third" style="color:black"><h1><i class="fas fa-hands-wash"></i></h1>hygiene<br><br></div>');
+                    }
+
+                    if(1){
+                        document.write('<div class="w3-third" style="color:orange"><h1><i class="fa fa-mask"></i></h1>saved people > 100<br><br></div>');
+                    }
+                    else{
+                        document.write('<div class="w3-third" style="color:black"><h1><i class="fa fa-mask"></i></h1>saved people > 100<br><br></div>');
+                    }
+
+                </script>
+                
+               
+                <div title="toilet-paper" class="w3-third" style="color:black">
+                    <h1><i class="fa fa-hiking"></i></h1>medium:<br>points > 100
+                </div>
+
+                <div class="w3-third" style="color:black">
+                    <h1><i class="fa fa-award"></i></h1>Quiz<br><br>
+                </div>
+
+
+                <div title="toilet-paper" class="w3-third" style="color:black">
+                    <h1><i class="fa fa-couch"></i></h1>#stayhome<br>
+                </div>
+               
+                <div title="toilet-paper" class="w3-third" style="color:black">
+                    <h1><i class="fa fa-broom"></i></h1>wizard<br>points > 500
+                </div>
+
+                <div title="toilet-paper" class="w3-third" style="color:black">
+                    <h1><i class="fa fa-dumbbell"></i></h1>exercise<br>
+                </div>
+
+            </center>
+        </div>
+
+
+            <div class="w3-third">
+                    <h5>Leader Board</h5>
+                    <table class="w3-table w3-striped w3-white">
+                        <tbody>
+                            {% for top_cuser in top_cusers %}
+                                <tr>
+                                    <td>
+                                    <i class="fas fa-skiing"></i>
+                                    </td>
+                                    <td>
+                                        {{ top_cuser.user.username }}
+                                        <!-- <script language="Javascript">
+                                            var name = "PeAch230";
+                                            document.write(name);
+                                        </script> -->
+                                    </td>
+                                    <td>
+                                        {{ top_cuser.score }} points
+                                    </td>
+                                </tr>
+                            {% endfor %}
+
+                        </tbody>
+                    </table>
+                <br>
+            </div>
+            <div class="w3-half">
+                <h3>Advice</h3>
+                <p>
+                    <li>
+                        Try to avoid to go out and mostly meet people
+                    </li>
+                    <li>
+                        Wash your hands
+                    </li>
+                    <li>
+                        Help people in need so that they can stay home
+                    </li>
+                </p>
+            </div>
+        </div>
+    </body>
+</html>

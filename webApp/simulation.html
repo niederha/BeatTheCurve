@@ -1,0 +1,510 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+     <!-- Meta data -->
+    <meta charset="utf-8">
+    <title>BeatTheCurve</title>
+    <meta name="description" content="A adjustable simulation of the spread of COVID-19">
+    <meta name="author" content="Loïc Niederhauser">
+
+    <!-- Google charts api -->
+    <script src="https://www.gstatic.com/charts/loader.js"></script>
+
+    <!-- Custom made scripts -->
+    <script src="js/updateSimulationGraph.js"></script>
+
+    <!-- External css sheets -->
+    <script src="https://kit.fontawesome.com/9606692b7c.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+    <link rel="stylesheet" href="css/customSliders.css">
+    <link rel="stylesheet" href="css/customRadiobutton.css">
+    <style>
+        html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
+        .half-height{
+            height: 50%;
+        }
+    </style>
+
+
+</head>
+
+<body class="w3-light-grey">
+
+    <!-- Top black band -->
+    <div class="w3-bar w3-top w3-black w3-large" style="z-index:4">
+        <span class="w3-bar-item w3-right">Beat The Curve</span>
+        <span class="w3-bar-item w3-left">Feel the spread</span>
+    </div>
+
+    <!-- Main page -->
+    <div class="w3-main" style="margin-left:300px;margin-top:43px;"></div>
+
+        <header class="w3-container" style="padding-top:22px">
+            <h3><b> <i class="fas fa-chart-bar w3-xlarge"></i> Simulate the spread</b></h3>
+        </header>
+
+        <!-- Categories explanation -->
+        <div class="w3-row-padding w3-margin-bottom">
+            <div class="w3-third">
+                <div class="w3-container w3-teal w3-padding-16">
+                    <div class="w3-right"><i class="far fa-smile w3-xxlarge w3-text-white"></i></div>
+                    <h4>Suceptible</h4>
+                    <p>People who haven't had the virus yet and might catch it. Those people are healthy.</p>
+                </div>
+            </div>
+            <div class="w3-third">
+                <div class="w3-container w3-deep-orange w3-padding-16">
+                    <div class="w3-right"><i class="far fa-sad-tear w3-xxlarge w3-text-white"></i></div>
+                    <h4>Sick</h4>
+                    <p>People who are infecected regardless on wether they have symptoms or not.</p>
+                </div>
+            </div>
+            <div class="w3-third">
+                <div class="w3-container w3-blue-gray w3-padding-16">
+                    <div class="w3-right"><i class="fas fa-dizzy w3-xxlarge w3-text-white"></i></div>
+                    <h4>Dead</h4>
+                    <p>Reported deaths due to COVID-19. Mostly people who were at risk.</p>
+                </div>
+            </div>
+            
+        </div>
+        <div class="w3-row-padding w3-margin-bottom">
+            <div class="w3-third">
+                <div class="w3-container w3-green w3-padding-16">
+                    <div class="w3-right"><i class="fa fa-users w3-xxlarge w3-text-white"></i></div>
+                    <h4>Recovered</h4>
+                    <p>People who have had the virus and have now recoverd. Those people are healthy.</p>
+                </div>
+            </div>
+
+            <div class="w3-third">
+                <div class="w3-container w3-dark-gray w3-padding-16">
+                    <div class="w3-right"><i class="fa fa-procedures w3-xxlarge w3-text-white"></i></div>
+                    <h4>Acute cases</h4>
+                    <p>People who suffer complication and should be hospitalized to be saved.</p>
+                </div>
+            </div>
+
+            <div class="w3-third">
+                <div class="w3-container w3-black w3-padding-16">
+                    <div class="w3-right"><i class="fa fa-hospital w3-xxlarge w3-text-white"></i></div>
+                    <h4>Hospital capacity</h4>
+                    <p>How many hospital beds are avaliable. If there are not enough people might die.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Parameters container -->
+        <div class="w3-container  w3-margin-bottom"></div>
+        <div class="w3-container w3-margin w3-border-top w3-border-bottom w3-border-blue-grey">
+            <h4><i class="fas fa-cogs w3-xlarge"> </i> Tweak parameters</h4>
+            <div class="w3-pannel w3-margin">
+                <h5>See what would happen in
+                    <select id="countrySelector">
+                        <option class="w3-light-grey" value="AF">Afghanistan</option>
+                        <option class="w3-light-grey" value="AX">Åland Islands</option>
+                        <option class="w3-light-grey" value="AL">Albania</option>
+                        <option class="w3-light-grey" value="DZ">Algeria</option>
+                        <option class="w3-light-grey" value="AS">American Samoa</option>
+                        <option class="w3-light-grey" value="AD">Andorra</option>
+                        <option class="w3-light-grey" value="AO">Angola</option>
+                        <option class="w3-light-grey" value="AI">Anguilla</option>
+                        <option class="w3-light-grey" value="AQ">Antarctica</option>
+                        <option class="w3-light-grey" value="AG">Antigua and Barbuda</option>
+                        <option class="w3-light-grey" value="AR">Argentina</option>
+                        <option class="w3-light-grey" value="AM">Armenia</option>
+                        <option class="w3-light-grey" value="AW">Aruba</option>
+                        <option class="w3-light-grey" value="AU">Australia</option>
+                        <option class="w3-light-grey" value="AT">Austria</option>
+                        <option class="w3-light-grey" value="AZ">Azerbaijan</option>
+                        <option class="w3-light-grey" value="BS">Bahamas</option>
+                        <option class="w3-light-grey" value="BH">Bahrain</option>
+                        <option class="w3-light-grey" value="BD">Bangladesh</option>
+                        <option class="w3-light-grey" value="BB">Barbados</option>
+                        <option class="w3-light-grey" value="BY">Belarus</option>
+                        <option class="w3-light-grey" value="BE">Belgium</option>
+                        <option class="w3-light-grey" value="BZ">Belize</option>
+                        <option class="w3-light-grey" value="BJ">Benin</option>
+                        <option class="w3-light-grey" value="BM">Bermuda</option>
+                        <option class="w3-light-grey" value="BT">Bhutan</option>
+                        <option class="w3-light-grey" value="BO">Bolivia, Plurinational State of</option>
+                        <option class="w3-light-grey" value="BQ">Bonaire, Sint Eustatius and Saba</option>
+                        <option class="w3-light-grey" value="BA">Bosnia and Herzegovina</option>
+                        <option class="w3-light-grey" value="BW">Botswana</option>
+                        <option class="w3-light-grey" value="BV">Bouvet Island</option>
+                        <option class="w3-light-grey" value="BR">Brazil</option>
+                        <option class="w3-light-grey" value="IO">British Indian Ocean Territory</option>
+                        <option class="w3-light-grey" value="BN">Brunei Darussalam</option>
+                        <option class="w3-light-grey" value="BG">Bulgaria</option>
+                        <option class="w3-light-grey" value="BF">Burkina Faso</option>
+                        <option class="w3-light-grey" value="BI">Burundi</option>
+                        <option class="w3-light-grey" value="KH">Cambodia</option>
+                        <option class="w3-light-grey" value="CM">Cameroon</option>
+                        <option class="w3-light-grey" value="CA">Canada</option>
+                        <option class="w3-light-grey" value="CV">Cape Verde</option>
+                        <option class="w3-light-grey" value="KY">Cayman Islands</option>
+                        <option class="w3-light-grey" value="CF">Central African Republic</option>
+                        <option class="w3-light-grey" value="TD">Chad</option>
+                        <option class="w3-light-grey" value="CL">Chile</option>
+                        <option class="w3-light-grey" value="CN">China</option>
+                        <option class="w3-light-grey" value="CX">Christmas Island</option>
+                        <option class="w3-light-grey" value="CC">Cocos (Keeling) Islands</option>
+                        <option class="w3-light-grey" value="CO">Colombia</option>
+                        <option class="w3-light-grey" value="KM">Comoros</option>
+                        <option class="w3-light-grey" value="CG">Congo</option>
+                        <option class="w3-light-grey" value="CD">Congo, the Democratic Republic of the</option>
+                        <option class="w3-light-grey" value="CK">Cook Islands</option>
+                        <option class="w3-light-grey" value="CR">Costa Rica</option>
+                        <option class="w3-light-grey" value="CI">Côte d'Ivoire</option>
+                        <option class="w3-light-grey" value="HR">Croatia</option>
+                        <option class="w3-light-grey" value="CU">Cuba</option>
+                        <option class="w3-light-grey" value="CW">Curaçao</option>
+                        <option class="w3-light-grey" value="CY">Cyprus</option>
+                        <option class="w3-light-grey" value="CZ">Czech Republic</option>
+                        <option class="w3-light-grey" value="DK">Denmark</option>
+                        <option class="w3-light-grey" value="DJ">Djibouti</option>
+                        <option class="w3-light-grey" value="DM">Dominica</option>
+                        <option class="w3-light-grey" value="DO">Dominican Republic</option>
+                        <option class="w3-light-grey" value="EC">Ecuador</option>
+                        <option class="w3-light-grey" value="EG">Egypt</option>
+                        <option class="w3-light-grey" value="SV">El Salvador</option>
+                        <option class="w3-light-grey" value="GQ">Equatorial Guinea</option>
+                        <option class="w3-light-grey" value="ER">Eritrea</option>
+                        <option class="w3-light-grey" value="EE">Estonia</option>
+                        <option class="w3-light-grey" value="ET">Ethiopia</option>
+                        <option class="w3-light-grey" value="FK">Falkland Islands (Malvinas)</option>
+                        <option class="w3-light-grey" value="FO">Faroe Islands</option>
+                        <option class="w3-light-grey" value="FJ">Fiji</option>
+                        <option class="w3-light-grey" value="FI">Finland</option>
+                        <option class="w3-light-grey" value="FR">France</option>
+                        <option class="w3-light-grey" value="GF">French Guiana</option>
+                        <option class="w3-light-grey" value="PF">French Polynesia</option>
+                        <option class="w3-light-grey" value="TF">French Southern Territories</option>
+                        <option class="w3-light-grey" value="GA">Gabon</option>
+                        <option class="w3-light-grey" value="GM">Gambia</option>
+                        <option class="w3-light-grey" value="GE">Georgia</option>
+                        <option class="w3-light-grey" value="DE">Germany</option>
+                        <option class="w3-light-grey" value="GH">Ghana</option>
+                        <option class="w3-light-grey" value="GI">Gibraltar</option>
+                        <option class="w3-light-grey" value="GR">Greece</option>
+                        <option class="w3-light-grey" value="GL">Greenland</option>
+                        <option class="w3-light-grey" value="GD">Grenada</option>
+                        <option class="w3-light-grey" value="GP">Guadeloupe</option>
+                        <option class="w3-light-grey" value="GU">Guam</option>
+                        <option class="w3-light-grey" value="GT">Guatemala</option>
+                        <option class="w3-light-grey" value="GG">Guernsey</option>
+                        <option class="w3-light-grey" value="GN">Guinea</option>
+                        <option class="w3-light-grey" value="GW">Guinea-Bissau</option>
+                        <option class="w3-light-grey" value="GY">Guyana</option>
+                        <option class="w3-light-grey" value="HT">Haiti</option>
+                        <option class="w3-light-grey" value="HM">Heard Island and McDonald Islands</option>
+                        <option class="w3-light-grey" value="VA">Holy See (Vatican City State)</option>
+                        <option class="w3-light-grey" value="HN">Honduras</option>
+                        <option class="w3-light-grey" value="HK">Hong Kong</option>
+                        <option class="w3-light-grey" value="HU">Hungary</option>
+                        <option class="w3-light-grey" value="IS">Iceland</option>
+                        <option class="w3-light-grey" value="IN">India</option>
+                        <option class="w3-light-grey" value="ID">Indonesia</option>
+                        <option class="w3-light-grey" value="IR">Iran, Islamic Republic of</option>
+                        <option class="w3-light-grey" value="IQ">Iraq</option>
+                        <option class="w3-light-grey" value="IE">Ireland</option>
+                        <option class="w3-light-grey" value="IM">Isle of Man</option>
+                        <option class="w3-light-grey" value="IL">Israel</option>
+                        <option class="w3-light-grey" value="IT">Italy</option>
+                        <option class="w3-light-grey" value="JM">Jamaica</option>
+                        <option class="w3-light-grey" value="JP">Japan</option>
+                        <option class="w3-light-grey" value="JE">Jersey</option>
+                        <option class="w3-light-grey" value="JO">Jordan</option>
+                        <option class="w3-light-grey" value="KZ">Kazakhstan</option>
+                        <option class="w3-light-grey" value="KE">Kenya</option>
+                        <option class="w3-light-grey" value="KI">Kiribati</option>
+                        <option class="w3-light-grey" value="KP">Korea, Democratic People's Republic of</option>
+                        <option class="w3-light-grey" value="KR">Korea, Republic of</option>
+                        <option class="w3-light-grey" value="KW">Kuwait</option>
+                        <option class="w3-light-grey" value="KG">Kyrgyzstan</option>
+                        <option class="w3-light-grey" value="LA">Lao People's Democratic Republic</option>
+                        <option class="w3-light-grey" value="LV">Latvia</option>
+                        <option class="w3-light-grey" value="LB">Lebanon</option>
+                        <option class="w3-light-grey" value="LS">Lesotho</option>
+                        <option class="w3-light-grey" value="LR">Liberia</option>
+                        <option class="w3-light-grey" value="LY">Libya</option>
+                        <option class="w3-light-grey" value="LI">Liechtenstein</option>
+                        <option class="w3-light-grey" value="LT">Lithuania</option>
+                        <option class="w3-light-grey" value="LU">Luxembourg</option>
+                        <option class="w3-light-grey" value="MO">Macao</option>
+                        <option class="w3-light-grey" value="MK">Macedonia, the former Yugoslav Republic of</option>
+                        <option class="w3-light-grey" value="MG">Madagascar</option>
+                        <option class="w3-light-grey" value="MW">Malawi</option>
+                        <option class="w3-light-grey" value="MY">Malaysia</option>
+                        <option class="w3-light-grey" value="MV">Maldives</option>
+                        <option class="w3-light-grey" value="ML">Mali</option>
+                        <option class="w3-light-grey" value="MT">Malta</option>
+                        <option class="w3-light-grey" value="MH">Marshall Islands</option>
+                        <option class="w3-light-grey" value="MQ">Martinique</option>
+                        <option class="w3-light-grey" value="MR">Mauritania</option>
+                        <option class="w3-light-grey" value="MU">Mauritius</option>
+                        <option class="w3-light-grey" value="YT">Mayotte</option>
+                        <option class="w3-light-grey" value="MX">Mexico</option>
+                        <option class="w3-light-grey" value="FM">Micronesia, Federated States of</option>
+                        <option class="w3-light-grey" value="MD">Moldova, Republic of</option>
+                        <option class="w3-light-grey" value="MC">Monaco</option>
+                        <option class="w3-light-grey" value="MN">Mongolia</option>
+                        <option class="w3-light-grey" value="ME">Montenegro</option>
+                        <option class="w3-light-grey" value="MS">Montserrat</option>
+                        <option class="w3-light-grey" value="MA">Morocco</option>
+                        <option class="w3-light-grey" value="MZ">Mozambique</option>
+                        <option class="w3-light-grey" value="MM">Myanmar</option>
+                        <option class="w3-light-grey" value="NA">Namibia</option>
+                        <option class="w3-light-grey" value="NR">Nauru</option>
+                        <option class="w3-light-grey" value="NP">Nepal</option>
+                        <option class="w3-light-grey" value="NL">Netherlands</option>
+                        <option class="w3-light-grey" value="NC">New Caledonia</option>
+                        <option class="w3-light-grey" value="NZ">New Zealand</option>
+                        <option class="w3-light-grey" value="NI">Nicaragua</option>
+                        <option class="w3-light-grey" value="NE">Niger</option>
+                        <option class="w3-light-grey" value="NG">Nigeria</option>
+                        <option class="w3-light-grey" value="NU">Niue</option>
+                        <option class="w3-light-grey" value="NF">Norfolk Island</option>
+                        <option class="w3-light-grey" value="MP">Northern Mariana Islands</option>
+                        <option class="w3-light-grey" value="NO">Norway</option>
+                        <option class="w3-light-grey" value="OM">Oman</option>
+                        <option class="w3-light-grey" value="PK">Pakistan</option>
+                        <option class="w3-light-grey" value="PW">Palau</option>
+                        <option class="w3-light-grey" value="PS">Palestinian Territory, Occupied</option>
+                        <option class="w3-light-grey" value="PA">Panama</option>
+                        <option class="w3-light-grey" value="PG">Papua New Guinea</option>
+                        <option class="w3-light-grey" value="PY">Paraguay</option>
+                        <option class="w3-light-grey" value="PE">Peru</option>
+                        <option class="w3-light-grey" value="PH">Philippines</option>
+                        <option class="w3-light-grey" value="PN">Pitcairn</option>
+                        <option class="w3-light-grey" value="PL">Poland</option>
+                        <option class="w3-light-grey" value="PT">Portugal</option>
+                        <option class="w3-light-grey" value="PR">Puerto Rico</option>
+                        <option class="w3-light-grey" value="QA">Qatar</option>
+                        <option class="w3-light-grey" value="RE">Réunion</option>
+                        <option class="w3-light-grey" value="RO">Romania</option>
+                        <option class="w3-light-grey" value="RU">Russian Federation</option>
+                        <option class="w3-light-grey" value="RW">Rwanda</option>
+                        <option class="w3-light-grey" value="BL">Saint Barthélemy</option>
+                        <option class="w3-light-grey" value="SH">Saint Helena, Ascension and Tristan da Cunha</option>
+                        <option class="w3-light-grey" value="KN">Saint Kitts and Nevis</option>
+                        <option class="w3-light-grey" value="LC">Saint Lucia</option>
+                        <option class="w3-light-grey" value="MF">Saint Martin (French part)</option>
+                        <option class="w3-light-grey" value="PM">Saint Pierre and Miquelon</option>
+                        <option class="w3-light-grey" value="VC">Saint Vincent and the Grenadines</option>
+                        <option class="w3-light-grey" value="WS">Samoa</option>
+                        <option class="w3-light-grey" value="SM">San Marino</option>
+                        <option class="w3-light-grey" value="ST">Sao Tome and Principe</option>
+                        <option class="w3-light-grey" value="SA">Saudi Arabia</option>
+                        <option class="w3-light-grey" value="SN">Senegal</option>
+                        <option class="w3-light-grey" value="RS">Serbia</option>
+                        <option class="w3-light-grey" value="SC">Seychelles</option>
+                        <option class="w3-light-grey" value="SL">Sierra Leone</option>
+                        <option class="w3-light-grey" value="SG">Singapore</option>
+                        <option class="w3-light-grey" value="SX">Sint Maarten (Dutch part)</option>
+                        <option class="w3-light-grey" value="SK">Slovakia</option>
+                        <option class="w3-light-grey" value="SI">Slovenia</option>
+                        <option class="w3-light-grey" value="SB">Solomon Islands</option>
+                        <option class="w3-light-grey" value="SO">Somalia</option>
+                        <option class="w3-light-grey" value="ZA">South Africa</option>
+                        <option class="w3-light-grey" value="GS">South Georgia and the South Sandwich Islands</option>
+                        <option class="w3-light-grey" value="SS">South Sudan</option>
+                        <option class="w3-light-grey" value="ES">Spain</option>
+                        <option class="w3-light-grey" value="LK">Sri Lanka</option>
+                        <option class="w3-light-grey" value="SD">Sudan</option>
+                        <option class="w3-light-grey" value="SR">Suriname</option>
+                        <option class="w3-light-grey" value="SJ">Svalbard and Jan Mayen</option>
+                        <option class="w3-light-grey" value="SZ">Swaziland</option>
+                        <option class="w3-light-grey" value="SE">Sweden</option>
+                        <option class="w3-light-grey" value="CH">Switzerland</option>
+                        <option class="w3-light-grey" value="SY">Syrian Arab Republic</option>
+                        <option class="w3-light-grey" value="TW">Taiwan, Province of China</option>
+                        <option class="w3-light-grey" value="TJ">Tajikistan</option>
+                        <option class="w3-light-grey" value="TZ">Tanzania, United Republic of</option>
+                        <option class="w3-light-grey" value="TH">Thailand</option>
+                        <option class="w3-light-grey" value="TL">Timor-Leste</option>
+                        <option class="w3-light-grey" value="TG">Togo</option>
+                        <option class="w3-light-grey" value="TK">Tokelau</option>
+                        <option class="w3-light-grey" value="TO">Tonga</option>
+                        <option class="w3-light-grey" value="TT">Trinidad and Tobago</option>
+                        <option class="w3-light-grey" value="TN">Tunisia</option>
+                        <option class="w3-light-grey" value="TR">Turkey</option>
+                        <option class="w3-light-grey" value="TM">Turkmenistan</option>
+                        <option class="w3-light-grey" value="TC">Turks and Caicos Islands</option>
+                        <option class="w3-light-grey" value="TV">Tuvalu</option>
+                        <option class="w3-light-grey" value="UG">Uganda</option>
+                        <option class="w3-light-grey" value="UA">Ukraine</option>
+                        <option class="w3-light-grey" value="AE">United Arab Emirates</option>
+                        <option class="w3-light-grey" value="GB">United Kingdom</option>
+                        <option class="w3-light-grey" value="US">United States</option>
+                        <option class="w3-light-grey" value="UM">United States Minor Outlying Islands</option>
+                        <option class="w3-light-grey" value="UY">Uruguay</option>
+                        <option class="w3-light-grey" value="UZ">Uzbekistan</option>
+                        <option class="w3-light-grey" value="VU">Vanuatu</option>
+                        <option class="w3-light-grey" value="VE">Venezuela, Bolivarian Republic of</option>
+                        <option class="w3-light-grey" value="VN">Viet Nam</option>
+                        <option class="w3-light-grey" value="VG">Virgin Islands, British</option>
+                        <option class="w3-light-grey" value="VI">Virgin Islands, U.S.</option>
+                        <option class="w3-light-grey" value="WF">Wallis and Futuna</option>
+                        <option class="w3-light-grey" value="EH">Western Sahara</option>
+                        <option class="w3-light-grey" value="YE">Yemen</option>
+                        <option class="w3-light-grey" value="ZM">Zambia</option>
+                        <option class="w3-light-grey" value="ZW">Zimbabwe</option>
+                    </select>
+                    if people behaved as follow:
+                </h5>
+        
+                <div class="w3-row-padding">
+                    <div class="w3-third">
+                        <p>Social distancing strength:</p>
+                        <label class="container"> None
+                            <input type="radio" name="radioSDS" checked="checked">
+                            <span class="checkmark"></span>
+                        </label>
+                        <label class="container"> Low
+                            <input type="radio" name="radioSDS">
+                            <span class="checkmark"></span>
+                        </label>
+                        <label class="container"> Moderate
+                            <input type="radio" name="radioSDS">
+                            <span class="checkmark"></span>
+                        </label>
+                        <label class="container"> High
+                            <input type="radio" name="radioSDS">
+                            <span class="checkmark"></span>
+                        </label>
+                        <label class="container"> Very high
+                            <input type="radio" name="radioSDS">
+                            <span class="checkmark"></span>
+                        </label>
+                        <label class="container"> Total isolation
+                            <input type="radio" name="radioSDS">
+                            <span class="checkmark"></span>
+                        </label>
+                    </div>
+        
+                    <div class="w3-third">
+                        <p id="textSD">Fraction of people following social distancing: 0 %</p>
+                        <div class="slidecontainer">
+                            <input type="range" min="0" max="100" value="0" class="slider" id="sliderSD">
+                        </div>
+                    </div>
+        
+                    <div class="w3-third">
+                        <p>Are we isolating infected people?</p>
+                        <label class="container"> No
+                            <input type="radio" name="radioIso" checked="checked">
+                            <span class="checkmark"></span>
+                        </label>
+                        <label class="container"> Yes
+                            <input type="radio" name="radioIso">
+                            <span class="checkmark"></span>
+                        </label>
+                    </div>
+        
+                    <div class="w3-third">
+                        <p>Hygiene</p>
+                        <label class="container"> Poor
+                            <input type="radio" name="radioH" checked="checked">
+                            <span class="checkmark"></span>
+                        </label>
+                        <label class="container"> Average
+                            <input type="radio" name="radioH">
+                            <span class="checkmark"></span>
+                        </label>
+                        <label class="container"> Above average
+                            <input type="radio" name="radioH">
+                            <span class="checkmark"></span>
+                        </label>
+                        <label class="container"> Borderline OCD
+                            <input type="radio" name="radioH">
+                            <span class="checkmark"></span>
+                        </label>
+                    </div>
+        
+                    <div class="w3-third">
+                        <p id="textGOF">Number of time per week people go to crowded places on average (e.g: supermarket): 7</p>
+                        <div class="slidecontainer">
+                            <input type="range" min="0" max="7" value="7" class="slider" id="sliderGOF">
+                        </div>
+                    </div>
+                </div>
+                <div class="w3-container w3-margin">
+                    <button id="buttonSimulate" class="w3-button w3-right" style="background-color: #7ec381;">Simulate</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Graph and boxes-->
+        <div class="w3-container w3-margin-bottom"></div>
+        <div class="w3-row w3-margin-left w3-margin-bottom">
+            <div class="w3-container w3-twothird">
+                <h4><h4><i class="fas fa-arrows-alt w3-xlarge"> </i> How would it spread th next 300 days in your country?</h4>
+                <p>Change parameters to see their impact</p>
+                <div id="SimulationGraph" class="w3-margin-left w3-margin-right" stlye="height:100%"></div>
+            </div>
+            <div class="w3-container w3-third">
+                <h4>After 300 days:</h4>
+                <p>(Click to hide/show)</p>
+                <button id="buttonSuceptible" class="w3-container w3-block w3-display-container w3-button w3-teal w3-border w3-border-teal w3-text-white">
+                    <div class="w3-right"><i class="far fa-smile w3-xxlarge w3-display-right w3-margin-right"></i>
+                    </div>
+                    <div class="w3-left">
+                        <h3 id="sim_nbSuceptible">No data</h3>
+                    </div>
+                </button>
+                <div class="w3-container w3-margin-bottom"></div>
+                <button id="buttonSick" class="w3-container w3-block w3-display-container w3-button w3-deep-orange w3-border w3-border-deep-orange w3-text-white">
+                    <div class="w3-right"><i class="far fa-sad-tear w3-xxlarge w3-display-right w3-margin-right"></i></div>
+                    <div class="w3-left">
+                        <h3 id="sim_nbSick">No data</h3>
+                    </div>
+                </button>
+                <div class="w3-container w3-margin-bottom"></div>
+                <button id="buttonDead" class="w3-container w3-block w3-display-container w3-button w3-blue-gray w3-border w3-border-blue-gray w3-text-white">
+                    <div class="w3-right"><i class="fas fa-dizzy w3-xxlarge w3-display-right w3-margin-right"></i>
+                    </div>
+                    <div class="w3-left">
+                        <h3 id="sim_nbDead">No data</h3>
+                    </div>
+                </button>
+                <div class="w3-container w3-margin-bottom"></div>
+                <button id="buttonRecovered" class="w3-container w3-block w3-display-container w3-button w3-green w3-border w3-border-green w3-text-white">
+                    <div class="w3-right "><i class="fas fa-users w3-xxlarge w3-display-right w3-margin-right"></i></div>
+                    <div class="w3-left">
+                        <h3 id="sim_nbImmune">No data</h3>
+                    </div>
+                </button>
+                <div class="w3-container w3-margin-bottom"></div>
+                <button id="buttonAcuteSymptoms" class="w3-container w3-block w3-display-container w3-button w3-dark-gray w3-border w3-border-dark-gray w3-text-white">
+                    <div class="w3-right "><i class="fas fa-procedures w3-xxlarge w3-display-right w3-margin-right"></i></div>
+                    <div class="w3-left">
+                        <h3 id="sim_nbAcuteSyptoms">No data</h3>
+                    </div>
+                </button>
+                <div class="w3-container w3-margin-bottom"></div>
+                <button id="buttonHospitalCapacity"
+                    class="w3-container w3-block w3-display-container w3-button w3-black w3-border w3-border-black w3-text-white">
+                    <div class="w3-right "><i class="fas fa-hospital w3-xxlarge w3-display-right w3-margin-right"></i></div>
+                    <div class="w3-left">
+                        <h3 id="sim_hospitalCapacity">No data</h3>
+                    </div>
+                </button>
+            </div>
+            
+        </div>
+    </div>
+
+    <footer class="w3-container w3-padding-16 w3-light-grey">
+        <p>Powered by <a href="https://www.w3schools.com/w3css/default.asp" target="_blank">w3.css</a></p>
+    </footer>
+</body>
+
+<!-- Custom made scripts -->
+<script src="js/bindCurveDisplayButtons.js"></script>
+<script src="js/manageSimulationOptions.js"></script>
+
+
+</html>

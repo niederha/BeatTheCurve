@@ -1,0 +1,79 @@
+<!doctype html>
+
+{% load filters %}
+
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+   <!-- <h4>Hello username</h4>
+    <br>-->
+    <title>Sign up</title>
+    <meta name="description" content="Sign up page">
+    <meta name="author" content="Amaia Soubelet">
+    <script src="https://kit.fontawesome.com/9606692b7c.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+    <style>
+        html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
+    </style>
+</head>
+
+<body class="w3-light-grey">
+
+    <div class="w3-bar w3-top w3-black w3-large" style="z-index:4">
+        <span class="w3-bar-item w3-right">Beat The Curve</span>
+        <span class="w3-bar-item w3-left">Sign up</span>
+    </div>
+   
+    <div class="w3-main" style="margin-left:300px;margin-top:43px;"></div>
+        <header class="w3-container w3-center" style="padding-top:22px">
+            <h3><b> <i class="fas fa-address-card"></i> Sign up</b></h3>
+        </header>
+    <div class="w3-container w3-row"> 
+
+        <div class="w3-quarter">
+            <p></p>
+        </div>
+        <div class="w3-half w3-card">
+            <div class="w3-container w3-teal">
+                <h2>Identification informations</h2>
+            </div>
+            <form action="{% url 'signup' %}" method="post">
+                {% csrf_token %}
+                
+                <div class="w3-container">
+                    <p>
+                        <label class="w3-text-teal">
+                            <i class="fas fa-user"></i> <b>Username</b>
+                        </label>
+                        {{ form.username|addClass:"w3-input w3-border w3-light-grey" }}
+                    </p>
+                </div>
+
+                <div class="w3-container">
+                    <p>
+                        <label class="w3-text-teal">
+                            <i class="fas fa-lock"></i> <b>Password</b>
+                        </label>
+                        {{ form.password1|addClass:"w3-input w3-border w3-light-grey" }} </td>
+                    </p>
+                </div>
+
+                <div class="w3-container">
+                    <p>                       
+                        <label class="w3-text-teal">
+                            <i class="fas fa-lock"></i> <b>Password Confirmation </b>
+                        </label>
+                        {{ form.password2|addClass:"w3-input w3-border w3-light-grey" }} 
+                    </p>
+                </div>
+                <div class="w3-container">
+                    <p>
+                        <input class="w3-button w3-blue-grey" type="submit" value="Sign up">
+                    </p>
+                </div>
+            </form>
+        </div>
+    </div> 
+</body>
+</html>
