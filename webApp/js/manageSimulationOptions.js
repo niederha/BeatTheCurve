@@ -24,16 +24,29 @@ function sliderSDCB(){
     textSD.innerHTML = "Fraction of pepople following social distancing: " + sliderSD.value + "%";
 }
 
+function sliderGOFCB() {
+    sendSimulationData.simulationData.goOutFrq = sliderGOF.value;
+    textGOF.innerHTML = "Number of time per week people go to crowded places on average (e.g: supermarket):  " + sliderGOF.value;
+}
 sendSimulationData(); // Get the first simulation
 
 // Bind callbacks
+
+// country DDL
 var countrySelector = document.getElementById("countrySelector");
 countrySelector.onchange = function(){
     sendSimulationData.simulationData.country = countrySelector.value};
 
+// SD slider
 var sliderSD = document.getElementById("sliderSD");
-var textSD = document.getElementById("textSD")
-sliderSD.oninput = sliderSDCB
+var textSD = document.getElementById("textSD");
+sliderSD.oninput = sliderSDCB;
+
+// GOF slider
+var sliderGOF = document.getElementById("sliderGOF");
+var textGOF = document.getElementById("textGOF");
+sliderSD.oninput = sliderGOFCB;
+
 
 var buttonSimulate = document.getElementById("buttonSimulate");
 buttonSimulate.onclick = sendSimulationData;
